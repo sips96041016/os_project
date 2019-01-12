@@ -1,7 +1,7 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
                                       3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-                                      4 ; This file was generated Sun Jan 13 00:59:30 2019
+                                      4 ; This file was generated Sun Jan 13 01:22:26 2019
                                       5 ;--------------------------------------------------------
                                       6 	.module testpreempt
                                       7 	.optsdcc -mmcs51 --model-small
@@ -321,10 +321,10 @@
                                     321 ;--------------------------------------------------------
                                     322 	.area HOME    (CODE)
       000000                        323 __interrupt_vect:
-      000000 02 01 87         [24]  324 	ljmp	__sdcc_gsinit_startup
+      000000 02 01 A7         [24]  324 	ljmp	__sdcc_gsinit_startup
       000003 32               [24]  325 	reti
       000004                        326 	.ds	7
-      00000B 02 01 8E         [24]  327 	ljmp	_timer0_ISR
+      00000B 02 01 AE         [24]  327 	ljmp	_timer0_ISR
                                     328 ;--------------------------------------------------------
                                     329 ; global & static initialisations
                                     330 ;--------------------------------------------------------
@@ -346,7 +346,7 @@
                                     346 	.area HOME    (CODE)
                                     347 	.area HOME    (CODE)
       00000E                        348 __sdcc_program_startup:
-      00000E 02 01 4B         [24]  349 	ljmp	_main
+      00000E 02 01 6B         [24]  349 	ljmp	_main
                                     350 ;	return from main will return to caller
                                     351 ;--------------------------------------------------------
                                     352 ; code
@@ -374,320 +374,336 @@
                                     374 ;	testpreempt.c:18: while (1) {
       000018                        375 00116$:
                                     376 ;	testpreempt.c:19: SemaphoreWait(empty,e_tail);
-      000018 78 37            [12]  377 	mov	r0,#_empty
-      00001A 16               [12]  378 	dec	@r0
-      00001B 78 37            [12]  379 	mov	r0,#_empty
-      00001D E6               [12]  380 	mov	a,@r0
-      00001E 30 E7 13         [24]  381 	jnb	acc.7,00102$
-      000021 05 3A            [12]  382 	inc	_e_tail
-      000023 A9 3A            [24]  383 	mov	r1,_e_tail
-      000025 78 28            [12]  384 	mov	r0,#_ID
-      000027 E6               [12]  385 	mov	a,@r0
-      000028 F7               [12]  386 	mov	@r1,a
-      000029 78 28            [12]  387 	mov	r0,#_ID
-      00002B E6               [12]  388 	mov	a,@r0
-      00002C 24 24            [12]  389 	add	a,#_bitmap
-      00002E F8               [12]  390 	mov	r0,a
-      00002F 76 FF            [12]  391 	mov	@r0,#0xFF
-      000031 12 02 BB         [24]  392 	lcall	_ThreadYield
-      000034                        393 00102$:
-                                    394 ;	testpreempt.c:20: SemaphoreWait(mutex,m_tail);
-      000034 78 35            [12]  395 	mov	r0,#_mutex
-      000036 16               [12]  396 	dec	@r0
-      000037 78 35            [12]  397 	mov	r0,#_mutex
-      000039 E6               [12]  398 	mov	a,@r0
-      00003A 30 E7 13         [24]  399 	jnb	acc.7,00104$
-      00003D 05 38            [12]  400 	inc	_m_tail
-      00003F A9 38            [24]  401 	mov	r1,_m_tail
-      000041 78 28            [12]  402 	mov	r0,#_ID
-      000043 E6               [12]  403 	mov	a,@r0
-      000044 F7               [12]  404 	mov	@r1,a
-      000045 78 28            [12]  405 	mov	r0,#_ID
-      000047 E6               [12]  406 	mov	a,@r0
-      000048 24 24            [12]  407 	add	a,#_bitmap
-      00004A F8               [12]  408 	mov	r0,a
-      00004B 76 FF            [12]  409 	mov	@r0,#0xFF
-      00004D 12 02 BB         [24]  410 	lcall	_ThreadYield
-      000050                        411 00104$:
-                                    412 ;	testpreempt.c:21: buffer[b_head] = c1;
-      000050 78 3B            [12]  413 	mov	r0,#_b_head
-      000052 E6               [12]  414 	mov	a,@r0
-      000053 24 30            [12]  415 	add	a,#_buffer
-      000055 F8               [12]  416 	mov	r0,a
-      000056 79 33            [12]  417 	mov	r1,#_c1
-      000058 E7               [12]  418 	mov	a,@r1
-      000059 F6               [12]  419 	mov	@r0,a
-                                    420 ;	testpreempt.c:22: SemaphoreSignal(mutex,m_tail);
-      00005A 78 35            [12]  421 	mov	r0,#_mutex
-      00005C 06               [12]  422 	inc	@r0
-      00005D 78 35            [12]  423 	mov	r0,#_mutex
-      00005F C3               [12]  424 	clr	c
-      000060 74 80            [12]  425 	mov	a,#(0x00 ^ 0x80)
-      000062 86 F0            [24]  426 	mov	b,@r0
-      000064 63 F0 80         [24]  427 	xrl	b,#0x80
-      000067 95 F0            [12]  428 	subb	a,b
-      000069 40 0B            [24]  429 	jc	00106$
-      00006B A9 38            [24]  430 	mov	r1,_m_tail
-      00006D E7               [12]  431 	mov	a,@r1
-      00006E FF               [12]  432 	mov	r7,a
-      00006F 24 24            [12]  433 	add	a,#_bitmap
-      000071 F8               [12]  434 	mov	r0,a
-      000072 76 01            [12]  435 	mov	@r0,#0x01
-      000074 15 38            [12]  436 	dec	_m_tail
-      000076                        437 00106$:
-                                    438 ;	testpreempt.c:23: SemaphoreSignal(full,f_tail);
-      000076 78 36            [12]  439 	mov	r0,#_full
-      000078 06               [12]  440 	inc	@r0
-      000079 78 36            [12]  441 	mov	r0,#_full
-      00007B C3               [12]  442 	clr	c
-      00007C 74 80            [12]  443 	mov	a,#(0x00 ^ 0x80)
-      00007E 86 F0            [24]  444 	mov	b,@r0
-      000080 63 F0 80         [24]  445 	xrl	b,#0x80
-      000083 95 F0            [12]  446 	subb	a,b
-      000085 40 0B            [24]  447 	jc	00108$
-      000087 A9 39            [24]  448 	mov	r1,_f_tail
-      000089 E7               [12]  449 	mov	a,@r1
-      00008A FF               [12]  450 	mov	r7,a
-      00008B 24 24            [12]  451 	add	a,#_bitmap
-      00008D F8               [12]  452 	mov	r0,a
-      00008E 76 01            [12]  453 	mov	@r0,#0x01
-      000090 15 39            [12]  454 	dec	_f_tail
-      000092                        455 00108$:
-                                    456 ;	testpreempt.c:24: if(b_head==2) b_head=0;
-      000092 78 3B            [12]  457 	mov	r0,#_b_head
-      000094 B6 02 06         [24]  458 	cjne	@r0,#0x02,00110$
-      000097 78 3B            [12]  459 	mov	r0,#_b_head
-      000099 76 00            [12]  460 	mov	@r0,#0x00
-      00009B 80 03            [24]  461 	sjmp	00111$
-      00009D                        462 00110$:
-                                    463 ;	testpreempt.c:25: else b_head++;
-      00009D 78 3B            [12]  464 	mov	r0,#_b_head
-      00009F 06               [12]  465 	inc	@r0
-      0000A0                        466 00111$:
-                                    467 ;	testpreempt.c:26: if(c1=='Z') c1 = 'A';
-      0000A0 78 33            [12]  468 	mov	r0,#_c1
-      0000A2 B6 5A 07         [24]  469 	cjne	@r0,#0x5A,00113$
-      0000A5 78 33            [12]  470 	mov	r0,#_c1
-      0000A7 76 41            [12]  471 	mov	@r0,#0x41
-      0000A9 02 00 18         [24]  472 	ljmp	00116$
-      0000AC                        473 00113$:
-                                    474 ;	testpreempt.c:27: else c1++;
-      0000AC 78 33            [12]  475 	mov	r0,#_c1
-      0000AE 06               [12]  476 	inc	@r0
-      0000AF 02 00 18         [24]  477 	ljmp	00116$
-                                    478 ;------------------------------------------------------------
-                                    479 ;Allocation info for local variables in function 'Consumer'
-                                    480 ;------------------------------------------------------------
-                                    481 ;	testpreempt.c:31: void Consumer(void) {
-                                    482 ;	-----------------------------------------
-                                    483 ;	 function Consumer
-                                    484 ;	-----------------------------------------
-      0000B2                        485 _Consumer:
-                                    486 ;	testpreempt.c:32: TMOD |= 0x20;
-      0000B2 43 89 20         [24]  487 	orl	_TMOD,#0x20
-                                    488 ;	testpreempt.c:33: TH1 = -6;
-      0000B5 75 8D FA         [24]  489 	mov	_TH1,#0xFA
-                                    490 ;	testpreempt.c:34: SCON = 0x50;
-      0000B8 75 98 50         [24]  491 	mov	_SCON,#0x50
-                                    492 ;	testpreempt.c:35: TR1 = 1;
-      0000BB D2 8E            [12]  493 	setb	_TR1
-                                    494 ;	testpreempt.c:36: while (1) {
-      0000BD                        495 00116$:
-                                    496 ;	testpreempt.c:37: SemaphoreWait(full,f_tail);
-      0000BD 78 36            [12]  497 	mov	r0,#_full
-      0000BF 16               [12]  498 	dec	@r0
-      0000C0 78 36            [12]  499 	mov	r0,#_full
-      0000C2 E6               [12]  500 	mov	a,@r0
-      0000C3 30 E7 13         [24]  501 	jnb	acc.7,00102$
-      0000C6 05 39            [12]  502 	inc	_f_tail
-      0000C8 A9 39            [24]  503 	mov	r1,_f_tail
-      0000CA 78 28            [12]  504 	mov	r0,#_ID
-      0000CC E6               [12]  505 	mov	a,@r0
-      0000CD F7               [12]  506 	mov	@r1,a
-      0000CE 78 28            [12]  507 	mov	r0,#_ID
-      0000D0 E6               [12]  508 	mov	a,@r0
-      0000D1 24 24            [12]  509 	add	a,#_bitmap
-      0000D3 F8               [12]  510 	mov	r0,a
-      0000D4 76 FF            [12]  511 	mov	@r0,#0xFF
-      0000D6 12 02 BB         [24]  512 	lcall	_ThreadYield
-      0000D9                        513 00102$:
-                                    514 ;	testpreempt.c:38: SemaphoreWait(mutex,m_tail);
-      0000D9 78 35            [12]  515 	mov	r0,#_mutex
-      0000DB 16               [12]  516 	dec	@r0
-      0000DC 78 35            [12]  517 	mov	r0,#_mutex
-      0000DE E6               [12]  518 	mov	a,@r0
-      0000DF 30 E7 13         [24]  519 	jnb	acc.7,00104$
-      0000E2 05 38            [12]  520 	inc	_m_tail
-      0000E4 A9 38            [24]  521 	mov	r1,_m_tail
-      0000E6 78 28            [12]  522 	mov	r0,#_ID
-      0000E8 E6               [12]  523 	mov	a,@r0
-      0000E9 F7               [12]  524 	mov	@r1,a
-      0000EA 78 28            [12]  525 	mov	r0,#_ID
-      0000EC E6               [12]  526 	mov	a,@r0
-      0000ED 24 24            [12]  527 	add	a,#_bitmap
-      0000EF F8               [12]  528 	mov	r0,a
-      0000F0 76 FF            [12]  529 	mov	@r0,#0xFF
-      0000F2 12 02 BB         [24]  530 	lcall	_ThreadYield
-      0000F5                        531 00104$:
-                                    532 ;	testpreempt.c:39: SBUF = buffer[b_tail];
-      0000F5 78 3C            [12]  533 	mov	r0,#_b_tail
-      0000F7 E6               [12]  534 	mov	a,@r0
-      0000F8 24 30            [12]  535 	add	a,#_buffer
-      0000FA F9               [12]  536 	mov	r1,a
-      0000FB 87 99            [24]  537 	mov	_SBUF,@r1
-                                    538 ;	testpreempt.c:40: SemaphoreSignal(mutex,m_tail);
-      0000FD 78 35            [12]  539 	mov	r0,#_mutex
-      0000FF 06               [12]  540 	inc	@r0
-      000100 78 35            [12]  541 	mov	r0,#_mutex
-      000102 C3               [12]  542 	clr	c
-      000103 74 80            [12]  543 	mov	a,#(0x00 ^ 0x80)
-      000105 86 F0            [24]  544 	mov	b,@r0
-      000107 63 F0 80         [24]  545 	xrl	b,#0x80
-      00010A 95 F0            [12]  546 	subb	a,b
-      00010C 40 0B            [24]  547 	jc	00106$
-      00010E A9 38            [24]  548 	mov	r1,_m_tail
-      000110 E7               [12]  549 	mov	a,@r1
-      000111 FF               [12]  550 	mov	r7,a
-      000112 24 24            [12]  551 	add	a,#_bitmap
-      000114 F8               [12]  552 	mov	r0,a
-      000115 76 01            [12]  553 	mov	@r0,#0x01
-      000117 15 38            [12]  554 	dec	_m_tail
-      000119                        555 00106$:
-                                    556 ;	testpreempt.c:41: SemaphoreSignal(empty,e_tail);
-      000119 78 37            [12]  557 	mov	r0,#_empty
-      00011B 06               [12]  558 	inc	@r0
-      00011C 78 37            [12]  559 	mov	r0,#_empty
-      00011E C3               [12]  560 	clr	c
-      00011F 74 80            [12]  561 	mov	a,#(0x00 ^ 0x80)
-      000121 86 F0            [24]  562 	mov	b,@r0
-      000123 63 F0 80         [24]  563 	xrl	b,#0x80
-      000126 95 F0            [12]  564 	subb	a,b
-      000128 40 0B            [24]  565 	jc	00108$
-      00012A A9 3A            [24]  566 	mov	r1,_e_tail
-      00012C E7               [12]  567 	mov	a,@r1
-      00012D FF               [12]  568 	mov	r7,a
-      00012E 24 24            [12]  569 	add	a,#_bitmap
-      000130 F8               [12]  570 	mov	r0,a
-      000131 76 01            [12]  571 	mov	@r0,#0x01
-      000133 15 3A            [12]  572 	dec	_e_tail
-      000135                        573 00108$:
-                                    574 ;	testpreempt.c:42: if(b_tail==2) b_tail=0;
-      000135 78 3C            [12]  575 	mov	r0,#_b_tail
-      000137 B6 02 06         [24]  576 	cjne	@r0,#0x02,00110$
-      00013A 78 3C            [12]  577 	mov	r0,#_b_tail
-      00013C 76 00            [12]  578 	mov	@r0,#0x00
-      00013E 80 03            [24]  579 	sjmp	00112$
-      000140                        580 00110$:
-                                    581 ;	testpreempt.c:43: else b_tail++;
-      000140 78 3C            [12]  582 	mov	r0,#_b_tail
-      000142 06               [12]  583 	inc	@r0
-                                    584 ;	testpreempt.c:44: while (!TI) { }
-      000143                        585 00112$:
-                                    586 ;	testpreempt.c:45: TI = 0;
-      000143 10 99 02         [24]  587 	jbc	_TI,00150$
-      000146 80 FB            [24]  588 	sjmp	00112$
-      000148                        589 00150$:
-      000148 02 00 BD         [24]  590 	ljmp	00116$
-                                    591 ;------------------------------------------------------------
-                                    592 ;Allocation info for local variables in function 'main'
-                                    593 ;------------------------------------------------------------
-                                    594 ;	testpreempt.c:49: void main(void) {
-                                    595 ;	-----------------------------------------
-                                    596 ;	 function main
-                                    597 ;	-----------------------------------------
-      00014B                        598 _main:
-                                    599 ;	testpreempt.c:50: buffer[0] = buffer[1] = buffer[2] = 0;
-      00014B 78 32            [12]  600 	mov	r0,#(_buffer + 0x0002)
-      00014D 76 00            [12]  601 	mov	@r0,#0x00
-      00014F 78 31            [12]  602 	mov	r0,#(_buffer + 0x0001)
-      000151 76 00            [12]  603 	mov	@r0,#0x00
-      000153 78 30            [12]  604 	mov	r0,#_buffer
-      000155 76 00            [12]  605 	mov	@r0,#0x00
-                                    606 ;	testpreempt.c:51: c2 = '1';
-      000157 78 34            [12]  607 	mov	r0,#_c2
-      000159 76 31            [12]  608 	mov	@r0,#0x31
-                                    609 ;	testpreempt.c:52: b_head = b_tail = 0;
-      00015B 78 3C            [12]  610 	mov	r0,#_b_tail
-      00015D 76 00            [12]  611 	mov	@r0,#0x00
-      00015F 78 3B            [12]  612 	mov	r0,#_b_head
-      000161 76 00            [12]  613 	mov	@r0,#0x00
-                                    614 ;	testpreempt.c:54: SemaphoreCreate(mutex, 1);
-      000163 78 35            [12]  615 	mov	r0,#_mutex
-      000165 76 01            [12]  616 	mov	@r0,#0x01
-                                    617 ;	testpreempt.c:55: SemaphoreCreate(full, 0);
-      000167 78 36            [12]  618 	mov	r0,#_full
-      000169 76 00            [12]  619 	mov	@r0,#0x00
-                                    620 ;	testpreempt.c:56: SemaphoreCreate(empty, 3);
-      00016B 78 37            [12]  621 	mov	r0,#_empty
-      00016D 76 03            [12]  622 	mov	@r0,#0x03
-                                    623 ;	testpreempt.c:61: __endasm;
-      00016F 75 38 5C         [24]  624 	mov _m_tail,#0x5C
-      000172 75 39 6C         [24]  625 	mov _f_tail,#0x6C
-      000175 75 3A 7C         [24]  626 	mov _e_tail,#0x7C
-                                    627 ;	testpreempt.c:63: ThreadCreate(Producer);
-      000178 90 00 14         [24]  628 	mov	dptr,#_Producer
-      00017B 12 02 44         [24]  629 	lcall	_ThreadCreate
-                                    630 ;	testpreempt.c:64: ThreadCreate(Consumer);
-      00017E 90 00 B2         [24]  631 	mov	dptr,#_Consumer
-      000181 12 02 44         [24]  632 	lcall	_ThreadCreate
-                                    633 ;	testpreempt.c:65: ThreadExit();
-      000184 02 03 0A         [24]  634 	ljmp	_ThreadExit
-                                    635 ;------------------------------------------------------------
-                                    636 ;Allocation info for local variables in function '_sdcc_gsinit_startup'
-                                    637 ;------------------------------------------------------------
-                                    638 ;	testpreempt.c:68: void _sdcc_gsinit_startup(void) {
-                                    639 ;	-----------------------------------------
-                                    640 ;	 function _sdcc_gsinit_startup
-                                    641 ;	-----------------------------------------
-      000187                        642 __sdcc_gsinit_startup:
-                                    643 ;	testpreempt.c:71: __endasm;
-      000187 02 02 03         [24]  644 	ljmp _Bootstrap
-      00018A 22               [24]  645 	ret
-                                    646 ;------------------------------------------------------------
-                                    647 ;Allocation info for local variables in function '_mcs51_genRAMCLEAR'
-                                    648 ;------------------------------------------------------------
-                                    649 ;	testpreempt.c:74: void _mcs51_genRAMCLEAR(void) {}
-                                    650 ;	-----------------------------------------
-                                    651 ;	 function _mcs51_genRAMCLEAR
-                                    652 ;	-----------------------------------------
-      00018B                        653 __mcs51_genRAMCLEAR:
-      00018B 22               [24]  654 	ret
-                                    655 ;------------------------------------------------------------
-                                    656 ;Allocation info for local variables in function '_mcs51_genXINIT'
-                                    657 ;------------------------------------------------------------
-                                    658 ;	testpreempt.c:75: void _mcs51_genXINIT(void) {}
-                                    659 ;	-----------------------------------------
-                                    660 ;	 function _mcs51_genXINIT
-                                    661 ;	-----------------------------------------
-      00018C                        662 __mcs51_genXINIT:
-      00018C 22               [24]  663 	ret
+      000018 C2 AF            [12]  377 	clr	_EA
+      00001A 78 37            [12]  378 	mov	r0,#_empty
+      00001C 16               [12]  379 	dec	@r0
+      00001D 78 37            [12]  380 	mov	r0,#_empty
+      00001F E6               [12]  381 	mov	a,@r0
+      000020 30 E7 13         [24]  382 	jnb	acc.7,00102$
+      000023 05 3A            [12]  383 	inc	_e_tail
+      000025 A9 3A            [24]  384 	mov	r1,_e_tail
+      000027 78 28            [12]  385 	mov	r0,#_ID
+      000029 E6               [12]  386 	mov	a,@r0
+      00002A F7               [12]  387 	mov	@r1,a
+      00002B 78 28            [12]  388 	mov	r0,#_ID
+      00002D E6               [12]  389 	mov	a,@r0
+      00002E 24 24            [12]  390 	add	a,#_bitmap
+      000030 F8               [12]  391 	mov	r0,a
+      000031 76 FF            [12]  392 	mov	@r0,#0xFF
+      000033 12 02 DB         [24]  393 	lcall	_ThreadYield
+      000036                        394 00102$:
+      000036 D2 AF            [12]  395 	setb	_EA
+                                    396 ;	testpreempt.c:20: SemaphoreWait(mutex,m_tail);
+      000038 C2 AF            [12]  397 	clr	_EA
+      00003A 78 35            [12]  398 	mov	r0,#_mutex
+      00003C 16               [12]  399 	dec	@r0
+      00003D 78 35            [12]  400 	mov	r0,#_mutex
+      00003F E6               [12]  401 	mov	a,@r0
+      000040 30 E7 13         [24]  402 	jnb	acc.7,00104$
+      000043 05 38            [12]  403 	inc	_m_tail
+      000045 A9 38            [24]  404 	mov	r1,_m_tail
+      000047 78 28            [12]  405 	mov	r0,#_ID
+      000049 E6               [12]  406 	mov	a,@r0
+      00004A F7               [12]  407 	mov	@r1,a
+      00004B 78 28            [12]  408 	mov	r0,#_ID
+      00004D E6               [12]  409 	mov	a,@r0
+      00004E 24 24            [12]  410 	add	a,#_bitmap
+      000050 F8               [12]  411 	mov	r0,a
+      000051 76 FF            [12]  412 	mov	@r0,#0xFF
+      000053 12 02 DB         [24]  413 	lcall	_ThreadYield
+      000056                        414 00104$:
+      000056 D2 AF            [12]  415 	setb	_EA
+                                    416 ;	testpreempt.c:21: buffer[b_head] = c1;
+      000058 78 3B            [12]  417 	mov	r0,#_b_head
+      00005A E6               [12]  418 	mov	a,@r0
+      00005B 24 30            [12]  419 	add	a,#_buffer
+      00005D F8               [12]  420 	mov	r0,a
+      00005E 79 33            [12]  421 	mov	r1,#_c1
+      000060 E7               [12]  422 	mov	a,@r1
+      000061 F6               [12]  423 	mov	@r0,a
+                                    424 ;	testpreempt.c:22: SemaphoreSignal(mutex,m_tail);
+      000062 C2 AF            [12]  425 	clr	_EA
+      000064 78 35            [12]  426 	mov	r0,#_mutex
+      000066 06               [12]  427 	inc	@r0
+      000067 78 35            [12]  428 	mov	r0,#_mutex
+      000069 C3               [12]  429 	clr	c
+      00006A 74 80            [12]  430 	mov	a,#(0x00 ^ 0x80)
+      00006C 86 F0            [24]  431 	mov	b,@r0
+      00006E 63 F0 80         [24]  432 	xrl	b,#0x80
+      000071 95 F0            [12]  433 	subb	a,b
+      000073 40 0B            [24]  434 	jc	00106$
+      000075 A9 38            [24]  435 	mov	r1,_m_tail
+      000077 E7               [12]  436 	mov	a,@r1
+      000078 FF               [12]  437 	mov	r7,a
+      000079 24 24            [12]  438 	add	a,#_bitmap
+      00007B F8               [12]  439 	mov	r0,a
+      00007C 76 01            [12]  440 	mov	@r0,#0x01
+      00007E 15 38            [12]  441 	dec	_m_tail
+      000080                        442 00106$:
+      000080 D2 AF            [12]  443 	setb	_EA
+                                    444 ;	testpreempt.c:23: SemaphoreSignal(full,f_tail);
+      000082 C2 AF            [12]  445 	clr	_EA
+      000084 78 36            [12]  446 	mov	r0,#_full
+      000086 06               [12]  447 	inc	@r0
+      000087 78 36            [12]  448 	mov	r0,#_full
+      000089 C3               [12]  449 	clr	c
+      00008A 74 80            [12]  450 	mov	a,#(0x00 ^ 0x80)
+      00008C 86 F0            [24]  451 	mov	b,@r0
+      00008E 63 F0 80         [24]  452 	xrl	b,#0x80
+      000091 95 F0            [12]  453 	subb	a,b
+      000093 40 0B            [24]  454 	jc	00108$
+      000095 A9 39            [24]  455 	mov	r1,_f_tail
+      000097 E7               [12]  456 	mov	a,@r1
+      000098 FF               [12]  457 	mov	r7,a
+      000099 24 24            [12]  458 	add	a,#_bitmap
+      00009B F8               [12]  459 	mov	r0,a
+      00009C 76 01            [12]  460 	mov	@r0,#0x01
+      00009E 15 39            [12]  461 	dec	_f_tail
+      0000A0                        462 00108$:
+      0000A0 D2 AF            [12]  463 	setb	_EA
+                                    464 ;	testpreempt.c:24: if(b_head==2) b_head=0;
+      0000A2 78 3B            [12]  465 	mov	r0,#_b_head
+      0000A4 B6 02 06         [24]  466 	cjne	@r0,#0x02,00110$
+      0000A7 78 3B            [12]  467 	mov	r0,#_b_head
+      0000A9 76 00            [12]  468 	mov	@r0,#0x00
+      0000AB 80 03            [24]  469 	sjmp	00111$
+      0000AD                        470 00110$:
+                                    471 ;	testpreempt.c:25: else b_head++;
+      0000AD 78 3B            [12]  472 	mov	r0,#_b_head
+      0000AF 06               [12]  473 	inc	@r0
+      0000B0                        474 00111$:
+                                    475 ;	testpreempt.c:26: if(c1=='Z') c1 = 'A';
+      0000B0 78 33            [12]  476 	mov	r0,#_c1
+      0000B2 B6 5A 07         [24]  477 	cjne	@r0,#0x5A,00113$
+      0000B5 78 33            [12]  478 	mov	r0,#_c1
+      0000B7 76 41            [12]  479 	mov	@r0,#0x41
+      0000B9 02 00 18         [24]  480 	ljmp	00116$
+      0000BC                        481 00113$:
+                                    482 ;	testpreempt.c:27: else c1++;
+      0000BC 78 33            [12]  483 	mov	r0,#_c1
+      0000BE 06               [12]  484 	inc	@r0
+      0000BF 02 00 18         [24]  485 	ljmp	00116$
+                                    486 ;------------------------------------------------------------
+                                    487 ;Allocation info for local variables in function 'Consumer'
+                                    488 ;------------------------------------------------------------
+                                    489 ;	testpreempt.c:31: void Consumer(void) {
+                                    490 ;	-----------------------------------------
+                                    491 ;	 function Consumer
+                                    492 ;	-----------------------------------------
+      0000C2                        493 _Consumer:
+                                    494 ;	testpreempt.c:32: TMOD |= 0x20;
+      0000C2 43 89 20         [24]  495 	orl	_TMOD,#0x20
+                                    496 ;	testpreempt.c:33: TH1 = -6;
+      0000C5 75 8D FA         [24]  497 	mov	_TH1,#0xFA
+                                    498 ;	testpreempt.c:34: SCON = 0x50;
+      0000C8 75 98 50         [24]  499 	mov	_SCON,#0x50
+                                    500 ;	testpreempt.c:35: TR1 = 1;
+      0000CB D2 8E            [12]  501 	setb	_TR1
+                                    502 ;	testpreempt.c:36: while (1) {
+      0000CD                        503 00116$:
+                                    504 ;	testpreempt.c:37: SemaphoreWait(full,f_tail);
+      0000CD C2 AF            [12]  505 	clr	_EA
+      0000CF 78 36            [12]  506 	mov	r0,#_full
+      0000D1 16               [12]  507 	dec	@r0
+      0000D2 78 36            [12]  508 	mov	r0,#_full
+      0000D4 E6               [12]  509 	mov	a,@r0
+      0000D5 30 E7 13         [24]  510 	jnb	acc.7,00102$
+      0000D8 05 39            [12]  511 	inc	_f_tail
+      0000DA A9 39            [24]  512 	mov	r1,_f_tail
+      0000DC 78 28            [12]  513 	mov	r0,#_ID
+      0000DE E6               [12]  514 	mov	a,@r0
+      0000DF F7               [12]  515 	mov	@r1,a
+      0000E0 78 28            [12]  516 	mov	r0,#_ID
+      0000E2 E6               [12]  517 	mov	a,@r0
+      0000E3 24 24            [12]  518 	add	a,#_bitmap
+      0000E5 F8               [12]  519 	mov	r0,a
+      0000E6 76 FF            [12]  520 	mov	@r0,#0xFF
+      0000E8 12 02 DB         [24]  521 	lcall	_ThreadYield
+      0000EB                        522 00102$:
+      0000EB D2 AF            [12]  523 	setb	_EA
+                                    524 ;	testpreempt.c:38: SemaphoreWait(mutex,m_tail);
+      0000ED C2 AF            [12]  525 	clr	_EA
+      0000EF 78 35            [12]  526 	mov	r0,#_mutex
+      0000F1 16               [12]  527 	dec	@r0
+      0000F2 78 35            [12]  528 	mov	r0,#_mutex
+      0000F4 E6               [12]  529 	mov	a,@r0
+      0000F5 30 E7 13         [24]  530 	jnb	acc.7,00104$
+      0000F8 05 38            [12]  531 	inc	_m_tail
+      0000FA A9 38            [24]  532 	mov	r1,_m_tail
+      0000FC 78 28            [12]  533 	mov	r0,#_ID
+      0000FE E6               [12]  534 	mov	a,@r0
+      0000FF F7               [12]  535 	mov	@r1,a
+      000100 78 28            [12]  536 	mov	r0,#_ID
+      000102 E6               [12]  537 	mov	a,@r0
+      000103 24 24            [12]  538 	add	a,#_bitmap
+      000105 F8               [12]  539 	mov	r0,a
+      000106 76 FF            [12]  540 	mov	@r0,#0xFF
+      000108 12 02 DB         [24]  541 	lcall	_ThreadYield
+      00010B                        542 00104$:
+      00010B D2 AF            [12]  543 	setb	_EA
+                                    544 ;	testpreempt.c:39: SBUF = buffer[b_tail];
+      00010D 78 3C            [12]  545 	mov	r0,#_b_tail
+      00010F E6               [12]  546 	mov	a,@r0
+      000110 24 30            [12]  547 	add	a,#_buffer
+      000112 F9               [12]  548 	mov	r1,a
+      000113 87 99            [24]  549 	mov	_SBUF,@r1
+                                    550 ;	testpreempt.c:40: SemaphoreSignal(mutex,m_tail);
+      000115 C2 AF            [12]  551 	clr	_EA
+      000117 78 35            [12]  552 	mov	r0,#_mutex
+      000119 06               [12]  553 	inc	@r0
+      00011A 78 35            [12]  554 	mov	r0,#_mutex
+      00011C C3               [12]  555 	clr	c
+      00011D 74 80            [12]  556 	mov	a,#(0x00 ^ 0x80)
+      00011F 86 F0            [24]  557 	mov	b,@r0
+      000121 63 F0 80         [24]  558 	xrl	b,#0x80
+      000124 95 F0            [12]  559 	subb	a,b
+      000126 40 0B            [24]  560 	jc	00106$
+      000128 A9 38            [24]  561 	mov	r1,_m_tail
+      00012A E7               [12]  562 	mov	a,@r1
+      00012B FF               [12]  563 	mov	r7,a
+      00012C 24 24            [12]  564 	add	a,#_bitmap
+      00012E F8               [12]  565 	mov	r0,a
+      00012F 76 01            [12]  566 	mov	@r0,#0x01
+      000131 15 38            [12]  567 	dec	_m_tail
+      000133                        568 00106$:
+      000133 D2 AF            [12]  569 	setb	_EA
+                                    570 ;	testpreempt.c:41: SemaphoreSignal(empty,e_tail);
+      000135 C2 AF            [12]  571 	clr	_EA
+      000137 78 37            [12]  572 	mov	r0,#_empty
+      000139 06               [12]  573 	inc	@r0
+      00013A 78 37            [12]  574 	mov	r0,#_empty
+      00013C C3               [12]  575 	clr	c
+      00013D 74 80            [12]  576 	mov	a,#(0x00 ^ 0x80)
+      00013F 86 F0            [24]  577 	mov	b,@r0
+      000141 63 F0 80         [24]  578 	xrl	b,#0x80
+      000144 95 F0            [12]  579 	subb	a,b
+      000146 40 0B            [24]  580 	jc	00108$
+      000148 A9 3A            [24]  581 	mov	r1,_e_tail
+      00014A E7               [12]  582 	mov	a,@r1
+      00014B FF               [12]  583 	mov	r7,a
+      00014C 24 24            [12]  584 	add	a,#_bitmap
+      00014E F8               [12]  585 	mov	r0,a
+      00014F 76 01            [12]  586 	mov	@r0,#0x01
+      000151 15 3A            [12]  587 	dec	_e_tail
+      000153                        588 00108$:
+      000153 D2 AF            [12]  589 	setb	_EA
+                                    590 ;	testpreempt.c:42: if(b_tail==2) b_tail=0;
+      000155 78 3C            [12]  591 	mov	r0,#_b_tail
+      000157 B6 02 06         [24]  592 	cjne	@r0,#0x02,00110$
+      00015A 78 3C            [12]  593 	mov	r0,#_b_tail
+      00015C 76 00            [12]  594 	mov	@r0,#0x00
+      00015E 80 03            [24]  595 	sjmp	00112$
+      000160                        596 00110$:
+                                    597 ;	testpreempt.c:43: else b_tail++;
+      000160 78 3C            [12]  598 	mov	r0,#_b_tail
+      000162 06               [12]  599 	inc	@r0
+                                    600 ;	testpreempt.c:44: while (!TI) { }
+      000163                        601 00112$:
+                                    602 ;	testpreempt.c:45: TI = 0;
+      000163 10 99 02         [24]  603 	jbc	_TI,00150$
+      000166 80 FB            [24]  604 	sjmp	00112$
+      000168                        605 00150$:
+      000168 02 00 CD         [24]  606 	ljmp	00116$
+                                    607 ;------------------------------------------------------------
+                                    608 ;Allocation info for local variables in function 'main'
+                                    609 ;------------------------------------------------------------
+                                    610 ;	testpreempt.c:49: void main(void) {
+                                    611 ;	-----------------------------------------
+                                    612 ;	 function main
+                                    613 ;	-----------------------------------------
+      00016B                        614 _main:
+                                    615 ;	testpreempt.c:50: buffer[0] = buffer[1] = buffer[2] = 0;
+      00016B 78 32            [12]  616 	mov	r0,#(_buffer + 0x0002)
+      00016D 76 00            [12]  617 	mov	@r0,#0x00
+      00016F 78 31            [12]  618 	mov	r0,#(_buffer + 0x0001)
+      000171 76 00            [12]  619 	mov	@r0,#0x00
+      000173 78 30            [12]  620 	mov	r0,#_buffer
+      000175 76 00            [12]  621 	mov	@r0,#0x00
+                                    622 ;	testpreempt.c:51: c2 = '1';
+      000177 78 34            [12]  623 	mov	r0,#_c2
+      000179 76 31            [12]  624 	mov	@r0,#0x31
+                                    625 ;	testpreempt.c:52: b_head = b_tail = 0;
+      00017B 78 3C            [12]  626 	mov	r0,#_b_tail
+      00017D 76 00            [12]  627 	mov	@r0,#0x00
+      00017F 78 3B            [12]  628 	mov	r0,#_b_head
+      000181 76 00            [12]  629 	mov	@r0,#0x00
+                                    630 ;	testpreempt.c:54: SemaphoreCreate(mutex, 1);
+      000183 78 35            [12]  631 	mov	r0,#_mutex
+      000185 76 01            [12]  632 	mov	@r0,#0x01
+                                    633 ;	testpreempt.c:55: SemaphoreCreate(full, 0);
+      000187 78 36            [12]  634 	mov	r0,#_full
+      000189 76 00            [12]  635 	mov	@r0,#0x00
+                                    636 ;	testpreempt.c:56: SemaphoreCreate(empty, 3);
+      00018B 78 37            [12]  637 	mov	r0,#_empty
+      00018D 76 03            [12]  638 	mov	@r0,#0x03
+                                    639 ;	testpreempt.c:61: __endasm;
+      00018F 75 38 5C         [24]  640 	mov _m_tail,#0x5C
+      000192 75 39 6C         [24]  641 	mov _f_tail,#0x6C
+      000195 75 3A 7C         [24]  642 	mov _e_tail,#0x7C
+                                    643 ;	testpreempt.c:63: ThreadCreate(Producer);
+      000198 90 00 14         [24]  644 	mov	dptr,#_Producer
+      00019B 12 02 64         [24]  645 	lcall	_ThreadCreate
+                                    646 ;	testpreempt.c:64: ThreadCreate(Consumer);
+      00019E 90 00 C2         [24]  647 	mov	dptr,#_Consumer
+      0001A1 12 02 64         [24]  648 	lcall	_ThreadCreate
+                                    649 ;	testpreempt.c:65: ThreadExit();
+      0001A4 02 03 2A         [24]  650 	ljmp	_ThreadExit
+                                    651 ;------------------------------------------------------------
+                                    652 ;Allocation info for local variables in function '_sdcc_gsinit_startup'
+                                    653 ;------------------------------------------------------------
+                                    654 ;	testpreempt.c:68: void _sdcc_gsinit_startup(void) {
+                                    655 ;	-----------------------------------------
+                                    656 ;	 function _sdcc_gsinit_startup
+                                    657 ;	-----------------------------------------
+      0001A7                        658 __sdcc_gsinit_startup:
+                                    659 ;	testpreempt.c:71: __endasm;
+      0001A7 02 02 23         [24]  660 	ljmp _Bootstrap
+      0001AA 22               [24]  661 	ret
+                                    662 ;------------------------------------------------------------
+                                    663 ;Allocation info for local variables in function '_mcs51_genRAMCLEAR'
                                     664 ;------------------------------------------------------------
-                                    665 ;Allocation info for local variables in function '_mcs51_genXRAMCLEAR'
-                                    666 ;------------------------------------------------------------
-                                    667 ;	testpreempt.c:76: void _mcs51_genXRAMCLEAR(void) {}
+                                    665 ;	testpreempt.c:74: void _mcs51_genRAMCLEAR(void) {}
+                                    666 ;	-----------------------------------------
+                                    667 ;	 function _mcs51_genRAMCLEAR
                                     668 ;	-----------------------------------------
-                                    669 ;	 function _mcs51_genXRAMCLEAR
-                                    670 ;	-----------------------------------------
-      00018D                        671 __mcs51_genXRAMCLEAR:
-      00018D 22               [24]  672 	ret
+      0001AB                        669 __mcs51_genRAMCLEAR:
+      0001AB 22               [24]  670 	ret
+                                    671 ;------------------------------------------------------------
+                                    672 ;Allocation info for local variables in function '_mcs51_genXINIT'
                                     673 ;------------------------------------------------------------
-                                    674 ;Allocation info for local variables in function 'timer0_ISR'
-                                    675 ;------------------------------------------------------------
-                                    676 ;	testpreempt.c:77: void timer0_ISR(void) __interrupt(1) {
+                                    674 ;	testpreempt.c:75: void _mcs51_genXINIT(void) {}
+                                    675 ;	-----------------------------------------
+                                    676 ;	 function _mcs51_genXINIT
                                     677 ;	-----------------------------------------
-                                    678 ;	 function timer0_ISR
-                                    679 ;	-----------------------------------------
-      00018E                        680 _timer0_ISR:
-                                    681 ;	testpreempt.c:80: __endasm;
-      00018E 02 01 C8         [24]  682 	ljmp _myTimer0Handler
-      000191 32               [24]  683 	reti
-                                    684 ;	eliminated unneeded mov psw,# (no regs used in bank)
-                                    685 ;	eliminated unneeded push/pop psw
-                                    686 ;	eliminated unneeded push/pop dpl
-                                    687 ;	eliminated unneeded push/pop dph
-                                    688 ;	eliminated unneeded push/pop b
-                                    689 ;	eliminated unneeded push/pop acc
-                                    690 	.area CSEG    (CODE)
-                                    691 	.area CONST   (CODE)
-                                    692 	.area XINIT   (CODE)
-                                    693 	.area CABS    (ABS,CODE)
+      0001AC                        678 __mcs51_genXINIT:
+      0001AC 22               [24]  679 	ret
+                                    680 ;------------------------------------------------------------
+                                    681 ;Allocation info for local variables in function '_mcs51_genXRAMCLEAR'
+                                    682 ;------------------------------------------------------------
+                                    683 ;	testpreempt.c:76: void _mcs51_genXRAMCLEAR(void) {}
+                                    684 ;	-----------------------------------------
+                                    685 ;	 function _mcs51_genXRAMCLEAR
+                                    686 ;	-----------------------------------------
+      0001AD                        687 __mcs51_genXRAMCLEAR:
+      0001AD 22               [24]  688 	ret
+                                    689 ;------------------------------------------------------------
+                                    690 ;Allocation info for local variables in function 'timer0_ISR'
+                                    691 ;------------------------------------------------------------
+                                    692 ;	testpreempt.c:77: void timer0_ISR(void) __interrupt(1) {
+                                    693 ;	-----------------------------------------
+                                    694 ;	 function timer0_ISR
+                                    695 ;	-----------------------------------------
+      0001AE                        696 _timer0_ISR:
+                                    697 ;	testpreempt.c:80: __endasm;
+      0001AE 02 01 E8         [24]  698 	ljmp _myTimer0Handler
+      0001B1 32               [24]  699 	reti
+                                    700 ;	eliminated unneeded mov psw,# (no regs used in bank)
+                                    701 ;	eliminated unneeded push/pop psw
+                                    702 ;	eliminated unneeded push/pop dpl
+                                    703 ;	eliminated unneeded push/pop dph
+                                    704 ;	eliminated unneeded push/pop b
+                                    705 ;	eliminated unneeded push/pop acc
+                                    706 	.area CSEG    (CODE)
+                                    707 	.area CONST   (CODE)
+                                    708 	.area XINIT   (CODE)
+                                    709 	.area CABS    (ABS,CODE)

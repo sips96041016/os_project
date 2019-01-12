@@ -15,6 +15,7 @@ __idata __at (0x2C) char i;
 #define SemaphoreCreate(s, n) s=n;
 #define SemaphoreWait(s,s_tail)\
 {\
+ EA=0;\
  s--;\
  if(s<0) {\
   s_tail++;\
@@ -22,14 +23,17 @@ __idata __at (0x2C) char i;
   bitmap[ID] = -1;\
   ThreadYield();\
   }\
+ EA=1;\
 }
 #define SemaphoreSignal(s,s_tail)\
 {\
+ EA=0;\
  s++;\
  if(s<=0){\
   bitmap[*s_tail] = 1;\
   s_tail--;\
  }\
+ EA=1;\
 }
 
 typedef char ThreadID;

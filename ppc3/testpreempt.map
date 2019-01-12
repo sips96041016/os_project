@@ -80,9 +80,9 @@ C:   00000020  s__CODE
 C:   00000080  l_DSEG                          
 C:   000000F8  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   00000337  l_CSEG                          
-C:   0000034B  s_CONST                         
-C:   0000034B  s_XINIT                         
+C:   00000357  l_CSEG                          
+C:   0000036B  s_CONST                         
+C:   0000036B  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -281,24 +281,24 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000014    00000337 =         823. bytes (REL,CON,CODE)
+CSEG                                00000014    00000357 =         855. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000014  _Producer                          testpreempt
-C:   000000B2  _Consumer                          testpreempt
-C:   0000014B  _main                              testpreempt
-C:   00000187  __sdcc_gsinit_startup              testpreempt
-C:   0000018B  __mcs51_genRAMCLEAR                testpreempt
-C:   0000018C  __mcs51_genXINIT                   testpreempt
-C:   0000018D  __mcs51_genXRAMCLEAR               testpreempt
-C:   0000018E  _timer0_ISR                        testpreempt
-C:   00000192  _thread_manager                    preemptive
-C:   000001C8  _myTimer0Handler                   preemptive
-C:   00000203  _Bootstrap                         preemptive
-C:   00000244  _ThreadCreate                      preemptive
-C:   000002BB  _ThreadYield                       preemptive
-C:   0000030A  _ThreadExit                        preemptive
+C:   000000C2  _Consumer                          testpreempt
+C:   0000016B  _main                              testpreempt
+C:   000001A7  __sdcc_gsinit_startup              testpreempt
+C:   000001AB  __mcs51_genRAMCLEAR                testpreempt
+C:   000001AC  __mcs51_genXINIT                   testpreempt
+C:   000001AD  __mcs51_genXRAMCLEAR               testpreempt
+C:   000001AE  _timer0_ISR                        testpreempt
+C:   000001B2  _thread_manager                    preemptive
+C:   000001E8  _myTimer0Handler                   preemptive
+C:   00000223  _Bootstrap                         preemptive
+C:   00000264  _ThreadCreate                      preemptive
+C:   000002DB  _ThreadYield                       preemptive
+C:   0000032A  _ThreadExit                        preemptive
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
 

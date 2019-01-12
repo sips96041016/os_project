@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-; This file was generated Sun Jan 13 00:59:30 2019
+; This file was generated Sun Jan 13 01:22:26 2019
 ;--------------------------------------------------------
 	.module testpreempt
 	.optsdcc -mmcs51 --model-small
@@ -374,6 +374,7 @@ _Producer:
 ;	testpreempt.c:18: while (1) {
 00116$:
 ;	testpreempt.c:19: SemaphoreWait(empty,e_tail);
+	clr	_EA
 	mov	r0,#_empty
 	dec	@r0
 	mov	r0,#_empty
@@ -391,7 +392,9 @@ _Producer:
 	mov	@r0,#0xFF
 	lcall	_ThreadYield
 00102$:
+	setb	_EA
 ;	testpreempt.c:20: SemaphoreWait(mutex,m_tail);
+	clr	_EA
 	mov	r0,#_mutex
 	dec	@r0
 	mov	r0,#_mutex
@@ -409,6 +412,7 @@ _Producer:
 	mov	@r0,#0xFF
 	lcall	_ThreadYield
 00104$:
+	setb	_EA
 ;	testpreempt.c:21: buffer[b_head] = c1;
 	mov	r0,#_b_head
 	mov	a,@r0
@@ -418,6 +422,7 @@ _Producer:
 	mov	a,@r1
 	mov	@r0,a
 ;	testpreempt.c:22: SemaphoreSignal(mutex,m_tail);
+	clr	_EA
 	mov	r0,#_mutex
 	inc	@r0
 	mov	r0,#_mutex
@@ -435,7 +440,9 @@ _Producer:
 	mov	@r0,#0x01
 	dec	_m_tail
 00106$:
+	setb	_EA
 ;	testpreempt.c:23: SemaphoreSignal(full,f_tail);
+	clr	_EA
 	mov	r0,#_full
 	inc	@r0
 	mov	r0,#_full
@@ -453,6 +460,7 @@ _Producer:
 	mov	@r0,#0x01
 	dec	_f_tail
 00108$:
+	setb	_EA
 ;	testpreempt.c:24: if(b_head==2) b_head=0;
 	mov	r0,#_b_head
 	cjne	@r0,#0x02,00110$
@@ -494,6 +502,7 @@ _Consumer:
 ;	testpreempt.c:36: while (1) {
 00116$:
 ;	testpreempt.c:37: SemaphoreWait(full,f_tail);
+	clr	_EA
 	mov	r0,#_full
 	dec	@r0
 	mov	r0,#_full
@@ -511,7 +520,9 @@ _Consumer:
 	mov	@r0,#0xFF
 	lcall	_ThreadYield
 00102$:
+	setb	_EA
 ;	testpreempt.c:38: SemaphoreWait(mutex,m_tail);
+	clr	_EA
 	mov	r0,#_mutex
 	dec	@r0
 	mov	r0,#_mutex
@@ -529,6 +540,7 @@ _Consumer:
 	mov	@r0,#0xFF
 	lcall	_ThreadYield
 00104$:
+	setb	_EA
 ;	testpreempt.c:39: SBUF = buffer[b_tail];
 	mov	r0,#_b_tail
 	mov	a,@r0
@@ -536,6 +548,7 @@ _Consumer:
 	mov	r1,a
 	mov	_SBUF,@r1
 ;	testpreempt.c:40: SemaphoreSignal(mutex,m_tail);
+	clr	_EA
 	mov	r0,#_mutex
 	inc	@r0
 	mov	r0,#_mutex
@@ -553,7 +566,9 @@ _Consumer:
 	mov	@r0,#0x01
 	dec	_m_tail
 00106$:
+	setb	_EA
 ;	testpreempt.c:41: SemaphoreSignal(empty,e_tail);
+	clr	_EA
 	mov	r0,#_empty
 	inc	@r0
 	mov	r0,#_empty
@@ -571,6 +586,7 @@ _Consumer:
 	mov	@r0,#0x01
 	dec	_e_tail
 00108$:
+	setb	_EA
 ;	testpreempt.c:42: if(b_tail==2) b_tail=0;
 	mov	r0,#_b_tail
 	cjne	@r0,#0x02,00110$

@@ -1,7 +1,7 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
                                       3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-                                      4 ; This file was generated Sun Jan 13 00:59:30 2019
+                                      4 ; This file was generated Sun Jan 13 01:22:26 2019
                                       5 ;--------------------------------------------------------
                                       6 	.module preemptive
                                       7 	.optsdcc -mmcs51 --model-small
@@ -307,7 +307,7 @@
                                     307 ;	-----------------------------------------
                                     308 ;	 function thread_manager
                                     309 ;	-----------------------------------------
-      000192                        310 _thread_manager:
+      0001B2                        310 _thread_manager:
                            000007   311 	ar7 = 0x07
                            000006   312 	ar6 = 0x06
                            000005   313 	ar5 = 0x05
@@ -317,44 +317,44 @@
                            000001   317 	ar1 = 0x01
                            000000   318 	ar0 = 0x00
                                     319 ;	preemptive.c:31: do {
-      000192                        320 00106$:
+      0001B2                        320 00106$:
                                     321 ;	preemptive.c:32: if(ID==MAXTHREADS-1) ID = 0;
-      000192 78 28            [12]  322 	mov	r0,#_ID
-      000194 B6 03 06         [24]  323 	cjne	@r0,#0x03,00102$
-      000197 78 28            [12]  324 	mov	r0,#_ID
-      000199 76 00            [12]  325 	mov	@r0,#0x00
-      00019B 80 03            [24]  326 	sjmp	00103$
-      00019D                        327 00102$:
+      0001B2 78 28            [12]  322 	mov	r0,#_ID
+      0001B4 B6 03 06         [24]  323 	cjne	@r0,#0x03,00102$
+      0001B7 78 28            [12]  324 	mov	r0,#_ID
+      0001B9 76 00            [12]  325 	mov	@r0,#0x00
+      0001BB 80 03            [24]  326 	sjmp	00103$
+      0001BD                        327 00102$:
                                     328 ;	preemptive.c:33: else ID++;
-      00019D 78 28            [12]  329 	mov	r0,#_ID
-      00019F 06               [12]  330 	inc	@r0
-      0001A0                        331 00103$:
+      0001BD 78 28            [12]  329 	mov	r0,#_ID
+      0001BF 06               [12]  330 	inc	@r0
+      0001C0                        331 00103$:
                                     332 ;	preemptive.c:34: if(bitmap[ID]>0) break;
-      0001A0 78 28            [12]  333 	mov	r0,#_ID
-      0001A2 E6               [12]  334 	mov	a,@r0
-      0001A3 24 24            [12]  335 	add	a,#_bitmap
-      0001A5 F9               [12]  336 	mov	r1,a
-      0001A6 87 07            [24]  337 	mov	ar7,@r1
-      0001A8 C3               [12]  338 	clr	c
-      0001A9 74 80            [12]  339 	mov	a,#(0x00 ^ 0x80)
-      0001AB 8F F0            [24]  340 	mov	b,r7
-      0001AD 63 F0 80         [24]  341 	xrl	b,#0x80
-      0001B0 95 F0            [12]  342 	subb	a,b
-      0001B2 50 DE            [24]  343 	jnc	00106$
+      0001C0 78 28            [12]  333 	mov	r0,#_ID
+      0001C2 E6               [12]  334 	mov	a,@r0
+      0001C3 24 24            [12]  335 	add	a,#_bitmap
+      0001C5 F9               [12]  336 	mov	r1,a
+      0001C6 87 07            [24]  337 	mov	ar7,@r1
+      0001C8 C3               [12]  338 	clr	c
+      0001C9 74 80            [12]  339 	mov	a,#(0x00 ^ 0x80)
+      0001CB 8F F0            [24]  340 	mov	b,r7
+      0001CD 63 F0 80         [24]  341 	xrl	b,#0x80
+      0001D0 95 F0            [12]  342 	subb	a,b
+      0001D2 50 DE            [24]  343 	jnc	00106$
                                     344 ;	preemptive.c:36: RESTORESTATE;
-      0001B4 78 28            [12]  345 	mov	r0,#_ID
-      0001B6 E6               [12]  346 	mov	a,@r0
-      0001B7 24 20            [12]  347 	add	a,#_ssp
-      0001B9 F9               [12]  348 	mov	r1,a
-      0001BA 87 81            [24]  349 	mov	_SP,@r1
-      0001BC D0 D0            [24]  350 	pop PSW 
-      0001BE D0 83            [24]  351 	pop DPH 
-      0001C0 D0 82            [24]  352 	pop DPL 
-      0001C2 D0 F0            [24]  353 	pop B 
-      0001C4 D0 E0            [24]  354 	pop ACC 
+      0001D4 78 28            [12]  345 	mov	r0,#_ID
+      0001D6 E6               [12]  346 	mov	a,@r0
+      0001D7 24 20            [12]  347 	add	a,#_ssp
+      0001D9 F9               [12]  348 	mov	r1,a
+      0001DA 87 81            [24]  349 	mov	_SP,@r1
+      0001DC D0 D0            [24]  350 	pop PSW 
+      0001DE D0 83            [24]  351 	pop DPH 
+      0001E0 D0 82            [24]  352 	pop DPL 
+      0001E2 D0 F0            [24]  353 	pop B 
+      0001E4 D0 E0            [24]  354 	pop ACC 
                                     355 ;	preemptive.c:39: __endasm;
-      0001C6 32               [24]  356 	reti
-      0001C7 22               [24]  357 	ret
+      0001E6 32               [24]  356 	reti
+      0001E7 22               [24]  357 	ret
                                     358 ;------------------------------------------------------------
                                     359 ;Allocation info for local variables in function 'myTimer0Handler'
                                     360 ;------------------------------------------------------------
@@ -362,47 +362,47 @@
                                     362 ;	-----------------------------------------
                                     363 ;	 function myTimer0Handler
                                     364 ;	-----------------------------------------
-      0001C8                        365 _myTimer0Handler:
+      0001E8                        365 _myTimer0Handler:
                                     366 ;	preemptive.c:43: SAVESTATE;
-      0001C8 C0 E0            [24]  367 	push ACC 
-      0001CA C0 F0            [24]  368 	push B 
-      0001CC C0 82            [24]  369 	push DPL 
-      0001CE C0 83            [24]  370 	push DPH 
-      0001D0 C0 D0            [24]  371 	push PSW 
-      0001D2 C2 D4            [12]  372 	clr RS1 
-      0001D4 C2 D3            [12]  373 	clr RS0 
-      0001D6 78 28            [12]  374 	mov	r0,#_ID
-      0001D8 E6               [12]  375 	mov	a,@r0
-      0001D9 24 20            [12]  376 	add	a,#_ssp
-      0001DB F8               [12]  377 	mov	r0,a
-      0001DC A6 81            [24]  378 	mov	@r0,_SP
+      0001E8 C0 E0            [24]  367 	push ACC 
+      0001EA C0 F0            [24]  368 	push B 
+      0001EC C0 82            [24]  369 	push DPL 
+      0001EE C0 83            [24]  370 	push DPH 
+      0001F0 C0 D0            [24]  371 	push PSW 
+      0001F2 C2 D4            [12]  372 	clr RS1 
+      0001F4 C2 D3            [12]  373 	clr RS0 
+      0001F6 78 28            [12]  374 	mov	r0,#_ID
+      0001F8 E6               [12]  375 	mov	a,@r0
+      0001F9 24 20            [12]  376 	add	a,#_ssp
+      0001FB F8               [12]  377 	mov	r0,a
+      0001FC A6 81            [24]  378 	mov	@r0,_SP
                                     379 ;	preemptive.c:44: temp1 = ID;
-      0001DE 78 28            [12]  380 	mov	r0,#_ID
-      0001E0 79 2A            [12]  381 	mov	r1,#_temp1
-      0001E2 E6               [12]  382 	mov	a,@r0
-      0001E3 F7               [12]  383 	mov	@r1,a
+      0001FE 78 28            [12]  380 	mov	r0,#_ID
+      000200 79 2A            [12]  381 	mov	r1,#_temp1
+      000202 E6               [12]  382 	mov	a,@r0
+      000203 F7               [12]  383 	mov	@r1,a
                                     384 ;	preemptive.c:45: ID = manager_ID;
-      0001E4 78 29            [12]  385 	mov	r0,#_manager_ID
-      0001E6 79 28            [12]  386 	mov	r1,#_ID
-      0001E8 E6               [12]  387 	mov	a,@r0
-      0001E9 F7               [12]  388 	mov	@r1,a
+      000204 78 29            [12]  385 	mov	r0,#_manager_ID
+      000206 79 28            [12]  386 	mov	r1,#_ID
+      000208 E6               [12]  387 	mov	a,@r0
+      000209 F7               [12]  388 	mov	@r1,a
                                     389 ;	preemptive.c:46: RESTORESTATE;
-      0001EA 78 28            [12]  390 	mov	r0,#_ID
-      0001EC E6               [12]  391 	mov	a,@r0
-      0001ED 24 20            [12]  392 	add	a,#_ssp
-      0001EF F9               [12]  393 	mov	r1,a
-      0001F0 87 81            [24]  394 	mov	_SP,@r1
-      0001F2 D0 D0            [24]  395 	pop PSW 
-      0001F4 D0 83            [24]  396 	pop DPH 
-      0001F6 D0 82            [24]  397 	pop DPL 
-      0001F8 D0 F0            [24]  398 	pop B 
-      0001FA D0 E0            [24]  399 	pop ACC 
+      00020A 78 28            [12]  390 	mov	r0,#_ID
+      00020C E6               [12]  391 	mov	a,@r0
+      00020D 24 20            [12]  392 	add	a,#_ssp
+      00020F F9               [12]  393 	mov	r1,a
+      000210 87 81            [24]  394 	mov	_SP,@r1
+      000212 D0 D0            [24]  395 	pop PSW 
+      000214 D0 83            [24]  396 	pop DPH 
+      000216 D0 82            [24]  397 	pop DPL 
+      000218 D0 F0            [24]  398 	pop B 
+      00021A D0 E0            [24]  399 	pop ACC 
                                     400 ;	preemptive.c:47: ID = temp1;
-      0001FC 78 2A            [12]  401 	mov	r0,#_temp1
-      0001FE 79 28            [12]  402 	mov	r1,#_ID
-      000200 E6               [12]  403 	mov	a,@r0
-      000201 F7               [12]  404 	mov	@r1,a
-      000202 22               [24]  405 	ret
+      00021C 78 2A            [12]  401 	mov	r0,#_temp1
+      00021E 79 28            [12]  402 	mov	r1,#_ID
+      000220 E6               [12]  403 	mov	a,@r0
+      000221 F7               [12]  404 	mov	@r1,a
+      000222 22               [24]  405 	ret
                                     406 ;------------------------------------------------------------
                                     407 ;Allocation info for local variables in function 'Bootstrap'
                                     408 ;------------------------------------------------------------
@@ -410,46 +410,46 @@
                                     410 ;	-----------------------------------------
                                     411 ;	 function Bootstrap
                                     412 ;	-----------------------------------------
-      000203                        413 _Bootstrap:
+      000223                        413 _Bootstrap:
                                     414 ;	preemptive.c:51: bitmap[0] = bitmap[1] = bitmap[2] = bitmap[3] = 0;
-      000203 78 27            [12]  415 	mov	r0,#(_bitmap + 0x0003)
-      000205 76 00            [12]  416 	mov	@r0,#0x00
-      000207 78 26            [12]  417 	mov	r0,#(_bitmap + 0x0002)
-      000209 76 00            [12]  418 	mov	@r0,#0x00
-      00020B 78 25            [12]  419 	mov	r0,#(_bitmap + 0x0001)
-      00020D 76 00            [12]  420 	mov	@r0,#0x00
-      00020F 78 24            [12]  421 	mov	r0,#_bitmap
-      000211 76 00            [12]  422 	mov	@r0,#0x00
+      000223 78 27            [12]  415 	mov	r0,#(_bitmap + 0x0003)
+      000225 76 00            [12]  416 	mov	@r0,#0x00
+      000227 78 26            [12]  417 	mov	r0,#(_bitmap + 0x0002)
+      000229 76 00            [12]  418 	mov	@r0,#0x00
+      00022B 78 25            [12]  419 	mov	r0,#(_bitmap + 0x0001)
+      00022D 76 00            [12]  420 	mov	@r0,#0x00
+      00022F 78 24            [12]  421 	mov	r0,#_bitmap
+      000231 76 00            [12]  422 	mov	@r0,#0x00
                                     423 ;	preemptive.c:53: TMOD = 0;
-      000213 75 89 00         [24]  424 	mov	_TMOD,#0x00
+      000233 75 89 00         [24]  424 	mov	_TMOD,#0x00
                                     425 ;	preemptive.c:54: IE = 0x82;
-      000216 75 A8 82         [24]  426 	mov	_IE,#0x82
+      000236 75 A8 82         [24]  426 	mov	_IE,#0x82
                                     427 ;	preemptive.c:55: TR0 = 1;
-      000219 D2 8C            [12]  428 	setb	_TR0
+      000239 D2 8C            [12]  428 	setb	_TR0
                                     429 ;	preemptive.c:57: manager_ID = ThreadCreate(thread_manager);
-      00021B 90 01 92         [24]  430 	mov	dptr,#_thread_manager
-      00021E 12 02 44         [24]  431 	lcall	_ThreadCreate
-      000221 E5 82            [12]  432 	mov	a,dpl
-      000223 78 29            [12]  433 	mov	r0,#_manager_ID
-      000225 F6               [12]  434 	mov	@r0,a
+      00023B 90 01 B2         [24]  430 	mov	dptr,#_thread_manager
+      00023E 12 02 64         [24]  431 	lcall	_ThreadCreate
+      000241 E5 82            [12]  432 	mov	a,dpl
+      000243 78 29            [12]  433 	mov	r0,#_manager_ID
+      000245 F6               [12]  434 	mov	@r0,a
                                     435 ;	preemptive.c:58: ID = ThreadCreate(main);
-      000226 90 01 4B         [24]  436 	mov	dptr,#_main
-      000229 12 02 44         [24]  437 	lcall	_ThreadCreate
-      00022C E5 82            [12]  438 	mov	a,dpl
-      00022E 78 28            [12]  439 	mov	r0,#_ID
-      000230 F6               [12]  440 	mov	@r0,a
+      000246 90 01 6B         [24]  436 	mov	dptr,#_main
+      000249 12 02 64         [24]  437 	lcall	_ThreadCreate
+      00024C E5 82            [12]  438 	mov	a,dpl
+      00024E 78 28            [12]  439 	mov	r0,#_ID
+      000250 F6               [12]  440 	mov	@r0,a
                                     441 ;	preemptive.c:59: RESTORESTATE;
-      000231 78 28            [12]  442 	mov	r0,#_ID
-      000233 E6               [12]  443 	mov	a,@r0
-      000234 24 20            [12]  444 	add	a,#_ssp
-      000236 F9               [12]  445 	mov	r1,a
-      000237 87 81            [24]  446 	mov	_SP,@r1
-      000239 D0 D0            [24]  447 	pop PSW 
-      00023B D0 83            [24]  448 	pop DPH 
-      00023D D0 82            [24]  449 	pop DPL 
-      00023F D0 F0            [24]  450 	pop B 
-      000241 D0 E0            [24]  451 	pop ACC 
-      000243 22               [24]  452 	ret
+      000251 78 28            [12]  442 	mov	r0,#_ID
+      000253 E6               [12]  443 	mov	a,@r0
+      000254 24 20            [12]  444 	add	a,#_ssp
+      000256 F9               [12]  445 	mov	r1,a
+      000257 87 81            [24]  446 	mov	_SP,@r1
+      000259 D0 D0            [24]  447 	pop PSW 
+      00025B D0 83            [24]  448 	pop DPH 
+      00025D D0 82            [24]  449 	pop DPL 
+      00025F D0 F0            [24]  450 	pop B 
+      000261 D0 E0            [24]  451 	pop ACC 
+      000263 22               [24]  452 	ret
                                     453 ;------------------------------------------------------------
                                     454 ;Allocation info for local variables in function 'ThreadCreate'
                                     455 ;------------------------------------------------------------
@@ -459,90 +459,90 @@
                                     459 ;	-----------------------------------------
                                     460 ;	 function ThreadCreate
                                     461 ;	-----------------------------------------
-      000244                        462 _ThreadCreate:
+      000264                        462 _ThreadCreate:
                                     463 ;	preemptive.c:63: EA = 0;
-      000244 C2 AF            [12]  464 	clr	_EA
+      000264 C2 AF            [12]  464 	clr	_EA
                                     465 ;	preemptive.c:64: for(i=0;i<MAXTHREADS;i++) if(!bitmap[i]) break;
-      000246 78 2C            [12]  466 	mov	r0,#_i
-      000248 76 00            [12]  467 	mov	@r0,#0x00
-      00024A                        468 00107$:
-      00024A 78 2C            [12]  469 	mov	r0,#_i
-      00024C C3               [12]  470 	clr	c
-      00024D E6               [12]  471 	mov	a,@r0
-      00024E 64 80            [12]  472 	xrl	a,#0x80
-      000250 94 84            [12]  473 	subb	a,#0x84
-      000252 50 0E            [24]  474 	jnc	00103$
-      000254 78 2C            [12]  475 	mov	r0,#_i
-      000256 E6               [12]  476 	mov	a,@r0
-      000257 24 24            [12]  477 	add	a,#_bitmap
-      000259 F9               [12]  478 	mov	r1,a
-      00025A E7               [12]  479 	mov	a,@r1
-      00025B 60 05            [24]  480 	jz	00103$
-      00025D 78 2C            [12]  481 	mov	r0,#_i
-      00025F 06               [12]  482 	inc	@r0
-      000260 80 E8            [24]  483 	sjmp	00107$
-      000262                        484 00103$:
+      000266 78 2C            [12]  466 	mov	r0,#_i
+      000268 76 00            [12]  467 	mov	@r0,#0x00
+      00026A                        468 00107$:
+      00026A 78 2C            [12]  469 	mov	r0,#_i
+      00026C C3               [12]  470 	clr	c
+      00026D E6               [12]  471 	mov	a,@r0
+      00026E 64 80            [12]  472 	xrl	a,#0x80
+      000270 94 84            [12]  473 	subb	a,#0x84
+      000272 50 0E            [24]  474 	jnc	00103$
+      000274 78 2C            [12]  475 	mov	r0,#_i
+      000276 E6               [12]  476 	mov	a,@r0
+      000277 24 24            [12]  477 	add	a,#_bitmap
+      000279 F9               [12]  478 	mov	r1,a
+      00027A E7               [12]  479 	mov	a,@r1
+      00027B 60 05            [24]  480 	jz	00103$
+      00027D 78 2C            [12]  481 	mov	r0,#_i
+      00027F 06               [12]  482 	inc	@r0
+      000280 80 E8            [24]  483 	sjmp	00107$
+      000282                        484 00103$:
                                     485 ;	preemptive.c:65: if(i==MAXTHREADS) return -1;
-      000262 78 2C            [12]  486 	mov	r0,#_i
-      000264 B6 04 04         [24]  487 	cjne	@r0,#0x04,00105$
-      000267 75 82 FF         [24]  488 	mov	dpl,#0xFF
-      00026A 22               [24]  489 	ret
-      00026B                        490 00105$:
+      000282 78 2C            [12]  486 	mov	r0,#_i
+      000284 B6 04 04         [24]  487 	cjne	@r0,#0x04,00105$
+      000287 75 82 FF         [24]  488 	mov	dpl,#0xFF
+      00028A 22               [24]  489 	ret
+      00028B                        490 00105$:
                                     491 ;	preemptive.c:67: bitmap[i] = 1;
-      00026B 78 2C            [12]  492 	mov	r0,#_i
-      00026D E6               [12]  493 	mov	a,@r0
-      00026E 24 24            [12]  494 	add	a,#_bitmap
-      000270 F8               [12]  495 	mov	r0,a
-      000271 76 01            [12]  496 	mov	@r0,#0x01
+      00028B 78 2C            [12]  492 	mov	r0,#_i
+      00028D E6               [12]  493 	mov	a,@r0
+      00028E 24 24            [12]  494 	add	a,#_bitmap
+      000290 F8               [12]  495 	mov	r0,a
+      000291 76 01            [12]  496 	mov	@r0,#0x01
                                     497 ;	preemptive.c:68: temp1 = SP;
-      000273 78 2A            [12]  498 	mov	r0,#_temp1
-      000275 A6 81            [24]  499 	mov	@r0,_SP
+      000293 78 2A            [12]  498 	mov	r0,#_temp1
+      000295 A6 81            [24]  499 	mov	@r0,_SP
                                     500 ;	preemptive.c:69: SP = 0x3F + i*0x10;
-      000277 78 2C            [12]  501 	mov	r0,#_i
-      000279 E6               [12]  502 	mov	a,@r0
-      00027A C4               [12]  503 	swap	a
-      00027B 54 F0            [12]  504 	anl	a,#0xF0
-      00027D FF               [12]  505 	mov	r7,a
-      00027E 24 3F            [12]  506 	add	a,#0x3F
-      000280 F5 81            [12]  507 	mov	_SP,a
+      000297 78 2C            [12]  501 	mov	r0,#_i
+      000299 E6               [12]  502 	mov	a,@r0
+      00029A C4               [12]  503 	swap	a
+      00029B 54 F0            [12]  504 	anl	a,#0xF0
+      00029D FF               [12]  505 	mov	r7,a
+      00029E 24 3F            [12]  506 	add	a,#0x3F
+      0002A0 F5 81            [12]  507 	mov	_SP,a
                                     508 ;	preemptive.c:84: __endasm;
-      000282 E5 82            [12]  509 	mov a,DPL
-      000284 85 83 F0         [24]  510 	mov b,DPH
-      000287 90 03 0A         [24]  511 	mov dptr,#_ThreadExit
-      00028A C0 82            [24]  512 	push DPL
-      00028C C0 83            [24]  513 	push DPH
-      00028E C0 E0            [24]  514 	push a
-      000290 C0 F0            [24]  515 	push b
-      000292 74 00            [12]  516 	mov a,#0x00
-      000294 C0 E0            [24]  517 	push a
-      000296 C0 E0            [24]  518 	push a
-      000298 C0 E0            [24]  519 	push a
-      00029A C0 E0            [24]  520 	push a
+      0002A2 E5 82            [12]  509 	mov a,DPL
+      0002A4 85 83 F0         [24]  510 	mov b,DPH
+      0002A7 90 03 2A         [24]  511 	mov dptr,#_ThreadExit
+      0002AA C0 82            [24]  512 	push DPL
+      0002AC C0 83            [24]  513 	push DPH
+      0002AE C0 E0            [24]  514 	push a
+      0002B0 C0 F0            [24]  515 	push b
+      0002B2 74 00            [12]  516 	mov a,#0x00
+      0002B4 C0 E0            [24]  517 	push a
+      0002B6 C0 E0            [24]  518 	push a
+      0002B8 C0 E0            [24]  519 	push a
+      0002BA C0 E0            [24]  520 	push a
                                     521 ;	preemptive.c:85: temp2 = i<<3;
-      00029C 78 2C            [12]  522 	mov	r0,#_i
-      00029E 79 2B            [12]  523 	mov	r1,#_temp2
-      0002A0 E6               [12]  524 	mov	a,@r0
-      0002A1 C4               [12]  525 	swap	a
-      0002A2 03               [12]  526 	rr	a
-      0002A3 54 F8            [12]  527 	anl	a,#0xF8
-      0002A5 F7               [12]  528 	mov	@r1,a
+      0002BC 78 2C            [12]  522 	mov	r0,#_i
+      0002BE 79 2B            [12]  523 	mov	r1,#_temp2
+      0002C0 E6               [12]  524 	mov	a,@r0
+      0002C1 C4               [12]  525 	swap	a
+      0002C2 03               [12]  526 	rr	a
+      0002C3 54 F8            [12]  527 	anl	a,#0xF8
+      0002C5 F7               [12]  528 	mov	@r1,a
                                     529 ;	preemptive.c:88: __endasm;
-      0002A6 C0 2B            [24]  530 	push _temp2
+      0002C6 C0 2B            [24]  530 	push _temp2
                                     531 ;	preemptive.c:90: ssp[i] = SP;
-      0002A8 78 2C            [12]  532 	mov	r0,#_i
-      0002AA E6               [12]  533 	mov	a,@r0
-      0002AB 24 20            [12]  534 	add	a,#_ssp
-      0002AD F8               [12]  535 	mov	r0,a
-      0002AE A6 81            [24]  536 	mov	@r0,_SP
+      0002C8 78 2C            [12]  532 	mov	r0,#_i
+      0002CA E6               [12]  533 	mov	a,@r0
+      0002CB 24 20            [12]  534 	add	a,#_ssp
+      0002CD F8               [12]  535 	mov	r0,a
+      0002CE A6 81            [24]  536 	mov	@r0,_SP
                                     537 ;	preemptive.c:91: SP = temp1;
-      0002B0 78 2A            [12]  538 	mov	r0,#_temp1
-      0002B2 86 81            [24]  539 	mov	_SP,@r0
+      0002D0 78 2A            [12]  538 	mov	r0,#_temp1
+      0002D2 86 81            [24]  539 	mov	_SP,@r0
                                     540 ;	preemptive.c:92: EA = 1;
-      0002B4 D2 AF            [12]  541 	setb	_EA
+      0002D4 D2 AF            [12]  541 	setb	_EA
                                     542 ;	preemptive.c:93: return i;
-      0002B6 78 2C            [12]  543 	mov	r0,#_i
-      0002B8 86 82            [24]  544 	mov	dpl,@r0
-      0002BA 22               [24]  545 	ret
+      0002D6 78 2C            [12]  543 	mov	r0,#_i
+      0002D8 86 82            [24]  544 	mov	dpl,@r0
+      0002DA 22               [24]  545 	ret
                                     546 ;------------------------------------------------------------
                                     547 ;Allocation info for local variables in function 'ThreadYield'
                                     548 ;------------------------------------------------------------
@@ -550,61 +550,61 @@
                                     550 ;	-----------------------------------------
                                     551 ;	 function ThreadYield
                                     552 ;	-----------------------------------------
-      0002BB                        553 _ThreadYield:
+      0002DB                        553 _ThreadYield:
                                     554 ;	preemptive.c:97: EA = 0;
-      0002BB C2 AF            [12]  555 	clr	_EA
+      0002DB C2 AF            [12]  555 	clr	_EA
                                     556 ;	preemptive.c:98: SAVESTATE;
-      0002BD C0 E0            [24]  557 	push ACC 
-      0002BF C0 F0            [24]  558 	push B 
-      0002C1 C0 82            [24]  559 	push DPL 
-      0002C3 C0 83            [24]  560 	push DPH 
-      0002C5 C0 D0            [24]  561 	push PSW 
-      0002C7 C2 D4            [12]  562 	clr RS1 
-      0002C9 C2 D3            [12]  563 	clr RS0 
-      0002CB 78 28            [12]  564 	mov	r0,#_ID
-      0002CD E6               [12]  565 	mov	a,@r0
-      0002CE 24 20            [12]  566 	add	a,#_ssp
-      0002D0 F8               [12]  567 	mov	r0,a
-      0002D1 A6 81            [24]  568 	mov	@r0,_SP
+      0002DD C0 E0            [24]  557 	push ACC 
+      0002DF C0 F0            [24]  558 	push B 
+      0002E1 C0 82            [24]  559 	push DPL 
+      0002E3 C0 83            [24]  560 	push DPH 
+      0002E5 C0 D0            [24]  561 	push PSW 
+      0002E7 C2 D4            [12]  562 	clr RS1 
+      0002E9 C2 D3            [12]  563 	clr RS0 
+      0002EB 78 28            [12]  564 	mov	r0,#_ID
+      0002ED E6               [12]  565 	mov	a,@r0
+      0002EE 24 20            [12]  566 	add	a,#_ssp
+      0002F0 F8               [12]  567 	mov	r0,a
+      0002F1 A6 81            [24]  568 	mov	@r0,_SP
                                     569 ;	preemptive.c:99: do {
-      0002D3                        570 00106$:
+      0002F3                        570 00106$:
                                     571 ;	preemptive.c:100: if(ID==MAXTHREADS-1) ID = 0;
-      0002D3 78 28            [12]  572 	mov	r0,#_ID
-      0002D5 B6 03 06         [24]  573 	cjne	@r0,#0x03,00102$
-      0002D8 78 28            [12]  574 	mov	r0,#_ID
-      0002DA 76 00            [12]  575 	mov	@r0,#0x00
-      0002DC 80 03            [24]  576 	sjmp	00103$
-      0002DE                        577 00102$:
+      0002F3 78 28            [12]  572 	mov	r0,#_ID
+      0002F5 B6 03 06         [24]  573 	cjne	@r0,#0x03,00102$
+      0002F8 78 28            [12]  574 	mov	r0,#_ID
+      0002FA 76 00            [12]  575 	mov	@r0,#0x00
+      0002FC 80 03            [24]  576 	sjmp	00103$
+      0002FE                        577 00102$:
                                     578 ;	preemptive.c:101: else ID++;
-      0002DE 78 28            [12]  579 	mov	r0,#_ID
-      0002E0 06               [12]  580 	inc	@r0
-      0002E1                        581 00103$:
+      0002FE 78 28            [12]  579 	mov	r0,#_ID
+      000300 06               [12]  580 	inc	@r0
+      000301                        581 00103$:
                                     582 ;	preemptive.c:102: if(bitmap[ID]>0) break;
-      0002E1 78 28            [12]  583 	mov	r0,#_ID
-      0002E3 E6               [12]  584 	mov	a,@r0
-      0002E4 24 24            [12]  585 	add	a,#_bitmap
-      0002E6 F9               [12]  586 	mov	r1,a
-      0002E7 87 07            [24]  587 	mov	ar7,@r1
-      0002E9 C3               [12]  588 	clr	c
-      0002EA 74 80            [12]  589 	mov	a,#(0x00 ^ 0x80)
-      0002EC 8F F0            [24]  590 	mov	b,r7
-      0002EE 63 F0 80         [24]  591 	xrl	b,#0x80
-      0002F1 95 F0            [12]  592 	subb	a,b
-      0002F3 50 DE            [24]  593 	jnc	00106$
+      000301 78 28            [12]  583 	mov	r0,#_ID
+      000303 E6               [12]  584 	mov	a,@r0
+      000304 24 24            [12]  585 	add	a,#_bitmap
+      000306 F9               [12]  586 	mov	r1,a
+      000307 87 07            [24]  587 	mov	ar7,@r1
+      000309 C3               [12]  588 	clr	c
+      00030A 74 80            [12]  589 	mov	a,#(0x00 ^ 0x80)
+      00030C 8F F0            [24]  590 	mov	b,r7
+      00030E 63 F0 80         [24]  591 	xrl	b,#0x80
+      000311 95 F0            [12]  592 	subb	a,b
+      000313 50 DE            [24]  593 	jnc	00106$
                                     594 ;	preemptive.c:104: RESTORESTATE;
-      0002F5 78 28            [12]  595 	mov	r0,#_ID
-      0002F7 E6               [12]  596 	mov	a,@r0
-      0002F8 24 20            [12]  597 	add	a,#_ssp
-      0002FA F9               [12]  598 	mov	r1,a
-      0002FB 87 81            [24]  599 	mov	_SP,@r1
-      0002FD D0 D0            [24]  600 	pop PSW 
-      0002FF D0 83            [24]  601 	pop DPH 
-      000301 D0 82            [24]  602 	pop DPL 
-      000303 D0 F0            [24]  603 	pop B 
-      000305 D0 E0            [24]  604 	pop ACC 
+      000315 78 28            [12]  595 	mov	r0,#_ID
+      000317 E6               [12]  596 	mov	a,@r0
+      000318 24 20            [12]  597 	add	a,#_ssp
+      00031A F9               [12]  598 	mov	r1,a
+      00031B 87 81            [24]  599 	mov	_SP,@r1
+      00031D D0 D0            [24]  600 	pop PSW 
+      00031F D0 83            [24]  601 	pop DPH 
+      000321 D0 82            [24]  602 	pop DPL 
+      000323 D0 F0            [24]  603 	pop B 
+      000325 D0 E0            [24]  604 	pop ACC 
                                     605 ;	preemptive.c:105: EA = 1;
-      000307 D2 AF            [12]  606 	setb	_EA
-      000309 22               [24]  607 	ret
+      000327 D2 AF            [12]  606 	setb	_EA
+      000329 22               [24]  607 	ret
                                     608 ;------------------------------------------------------------
                                     609 ;Allocation info for local variables in function 'ThreadExit'
                                     610 ;------------------------------------------------------------
@@ -612,54 +612,54 @@
                                     612 ;	-----------------------------------------
                                     613 ;	 function ThreadExit
                                     614 ;	-----------------------------------------
-      00030A                        615 _ThreadExit:
+      00032A                        615 _ThreadExit:
                                     616 ;	preemptive.c:109: EA = 0;
-      00030A C2 AF            [12]  617 	clr	_EA
+      00032A C2 AF            [12]  617 	clr	_EA
                                     618 ;	preemptive.c:110: bitmap[ID] = 0;
-      00030C 78 28            [12]  619 	mov	r0,#_ID
-      00030E E6               [12]  620 	mov	a,@r0
-      00030F 24 24            [12]  621 	add	a,#_bitmap
-      000311 F8               [12]  622 	mov	r0,a
-      000312 76 00            [12]  623 	mov	@r0,#0x00
+      00032C 78 28            [12]  619 	mov	r0,#_ID
+      00032E E6               [12]  620 	mov	a,@r0
+      00032F 24 24            [12]  621 	add	a,#_bitmap
+      000331 F8               [12]  622 	mov	r0,a
+      000332 76 00            [12]  623 	mov	@r0,#0x00
                                     624 ;	preemptive.c:111: do {
-      000314                        625 00106$:
+      000334                        625 00106$:
                                     626 ;	preemptive.c:112: if(ID==MAXTHREADS-1) ID = 0;
-      000314 78 28            [12]  627 	mov	r0,#_ID
-      000316 B6 03 06         [24]  628 	cjne	@r0,#0x03,00102$
-      000319 78 28            [12]  629 	mov	r0,#_ID
-      00031B 76 00            [12]  630 	mov	@r0,#0x00
-      00031D 80 03            [24]  631 	sjmp	00103$
-      00031F                        632 00102$:
+      000334 78 28            [12]  627 	mov	r0,#_ID
+      000336 B6 03 06         [24]  628 	cjne	@r0,#0x03,00102$
+      000339 78 28            [12]  629 	mov	r0,#_ID
+      00033B 76 00            [12]  630 	mov	@r0,#0x00
+      00033D 80 03            [24]  631 	sjmp	00103$
+      00033F                        632 00102$:
                                     633 ;	preemptive.c:113: else ID++;
-      00031F 78 28            [12]  634 	mov	r0,#_ID
-      000321 06               [12]  635 	inc	@r0
-      000322                        636 00103$:
+      00033F 78 28            [12]  634 	mov	r0,#_ID
+      000341 06               [12]  635 	inc	@r0
+      000342                        636 00103$:
                                     637 ;	preemptive.c:114: if(bitmap[ID]>0) break;
-      000322 78 28            [12]  638 	mov	r0,#_ID
-      000324 E6               [12]  639 	mov	a,@r0
-      000325 24 24            [12]  640 	add	a,#_bitmap
-      000327 F9               [12]  641 	mov	r1,a
-      000328 87 07            [24]  642 	mov	ar7,@r1
-      00032A C3               [12]  643 	clr	c
-      00032B 74 80            [12]  644 	mov	a,#(0x00 ^ 0x80)
-      00032D 8F F0            [24]  645 	mov	b,r7
-      00032F 63 F0 80         [24]  646 	xrl	b,#0x80
-      000332 95 F0            [12]  647 	subb	a,b
-      000334 50 DE            [24]  648 	jnc	00106$
+      000342 78 28            [12]  638 	mov	r0,#_ID
+      000344 E6               [12]  639 	mov	a,@r0
+      000345 24 24            [12]  640 	add	a,#_bitmap
+      000347 F9               [12]  641 	mov	r1,a
+      000348 87 07            [24]  642 	mov	ar7,@r1
+      00034A C3               [12]  643 	clr	c
+      00034B 74 80            [12]  644 	mov	a,#(0x00 ^ 0x80)
+      00034D 8F F0            [24]  645 	mov	b,r7
+      00034F 63 F0 80         [24]  646 	xrl	b,#0x80
+      000352 95 F0            [12]  647 	subb	a,b
+      000354 50 DE            [24]  648 	jnc	00106$
                                     649 ;	preemptive.c:116: RESTORESTATE;
-      000336 78 28            [12]  650 	mov	r0,#_ID
-      000338 E6               [12]  651 	mov	a,@r0
-      000339 24 20            [12]  652 	add	a,#_ssp
-      00033B F9               [12]  653 	mov	r1,a
-      00033C 87 81            [24]  654 	mov	_SP,@r1
-      00033E D0 D0            [24]  655 	pop PSW 
-      000340 D0 83            [24]  656 	pop DPH 
-      000342 D0 82            [24]  657 	pop DPL 
-      000344 D0 F0            [24]  658 	pop B 
-      000346 D0 E0            [24]  659 	pop ACC 
+      000356 78 28            [12]  650 	mov	r0,#_ID
+      000358 E6               [12]  651 	mov	a,@r0
+      000359 24 20            [12]  652 	add	a,#_ssp
+      00035B F9               [12]  653 	mov	r1,a
+      00035C 87 81            [24]  654 	mov	_SP,@r1
+      00035E D0 D0            [24]  655 	pop PSW 
+      000360 D0 83            [24]  656 	pop DPH 
+      000362 D0 82            [24]  657 	pop DPL 
+      000364 D0 F0            [24]  658 	pop B 
+      000366 D0 E0            [24]  659 	pop ACC 
                                     660 ;	preemptive.c:117: EA = 1;
-      000348 D2 AF            [12]  661 	setb	_EA
-      00034A 22               [24]  662 	ret
+      000368 D2 AF            [12]  661 	setb	_EA
+      00036A 22               [24]  662 	ret
                                     663 	.area CSEG    (CODE)
                                     664 	.area CONST   (CODE)
                                     665 	.area XINIT   (CODE)
