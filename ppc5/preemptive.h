@@ -28,6 +28,7 @@ __idata __at (0x4A) unsigned char c_temp2;
 __idata __at (0x5C) unsigned char c_temp3;
 __idata __at (0x5B) char print;
 __idata __at (0x6C) char* p_tail;
+__idata __at (0x6B) char temp3;
 
 #define SemaphoreCreate(s, n) s=n;
 #define SemaphoreWait(s,s_tail)\

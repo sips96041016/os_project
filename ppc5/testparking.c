@@ -299,7 +299,7 @@ void Printer(void) {
     SemaphoreWait(print,p_tail);
     c_temp = 0;
     current = 1;
-    while(c_temp<4){
+    while(c_temp<10){
         for(j=0;j<10;j++){
             c_temp2 = log[j];
             c_temp3 = c_temp2&0x7F;
@@ -313,7 +313,7 @@ void Printer(void) {
                 SBUF = 'r';
                 while (!TI) { }
                 TI = 0;
-                SBUF = '0' + j/2;
+                SBUF = '1' + j/2;
                 while (!TI) { }
                 TI = 0;
                 SBUF = ' ';
@@ -353,7 +353,7 @@ void Printer(void) {
                 SBUF = 't';
                 while (!TI) { }
                 TI = 0;
-                SBUF = '0' + c_temp2/0x80;
+                SBUF = '1' + c_temp2/0x80;
                 while (!TI) { }
                 TI = 0;
                 SBUF = ' ';

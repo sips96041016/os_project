@@ -201,7 +201,7 @@ Symbol Table
     _AC                                                         =  0000D6 G
     _ACC                                                        =  0000E0 G
     _B                                                          =  0000F0 G
- 16 _Bootstrap                                                     000151 GR
+ 16 _Bootstrap                                                     00015A GR
     _CY                                                         =  0000D7 G
     _D                                                          =  00002C G
     _DPH                                                        =  000083 G
@@ -306,9 +306,9 @@ Symbol Table
     _TR0                                                        =  00008C G
     _TR1                                                        =  00008E G
     _TXD                                                        =  0000B1 G
- 16 _ThreadCreate                                                  00019C GR
- 16 _ThreadExit                                                    000282 GR
- 16 _ThreadYield                                                   000233 GR
+ 16 _ThreadCreate                                                  0001A5 GR
+ 16 _ThreadExit                                                    00028B GR
+ 16 _ThreadYield                                                   00023C GR
     _WR                                                         =  0000B6 G
     _bitmap                                                     =  000024 G
     _c_temp                                                     =  000029 G
@@ -324,7 +324,7 @@ Symbol Table
     _m_tail                                                     =  00003C G
     _main                                                          ****** GX
     _mutex                                                      =  00003A G
- 16 _myTimer0Handler                                               00009D GR
+ 16 _myTimer0Handler                                               0000A6 GR
  16 _now                                                           000000 GR
     _p_tail                                                     =  00006C G
     _plot                                                       =  00004E G
@@ -332,6 +332,7 @@ Symbol Table
     _ssp                                                        =  000020 G
     _temp1                                                      =  00002A G
     _temp2                                                      =  00002B G
+    _temp3                                                      =  00006B G
     _th_tail                                                    =  00003D G
     _thread                                                     =  00003B G
  16 _thread_manager                                                000027 GR
@@ -357,12 +358,12 @@ Symbol Table
     acc.7                                                       =  0000E7 L
     ar0                                                         =  000000 
     ar1                                                         =  000001 
-    ar2                                                         =  000002 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 7.
 Hexadecimal [24-Bits]
 
 Symbol Table
 
+    ar2                                                         =  000002 
     ar3                                                         =  000003 
     ar4                                                         =  000004 
     ar5                                                         =  000005 
@@ -417,12 +418,12 @@ Symbol Table
     p                                                           =  0000D0 L
     p0                                                          =  000080 L
     p0.0                                                        =  000080 L
-    p0.1                                                        =  000081 L
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 8.
 Hexadecimal [24-Bits]
 
 Symbol Table
 
+    p0.1                                                        =  000081 L
     p0.2                                                        =  000082 L
     p0.3                                                        =  000083 L
     p0.4                                                        =  000084 L
@@ -477,12 +478,12 @@ Symbol Table
     rcap2l                                                      =  0000CA L
     rclk                                                        =  0000CD L
     ren                                                         =  00009C L
-    ri                                                          =  000098 L
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 9.
 Hexadecimal [24-Bits]
 
 Symbol Table
 
+    ri                                                          =  000098 L
     rs0                                                         =  0000D3 L
     rs1                                                         =  0000D4 L
     rxd                                                         =  0000B0 L
@@ -536,6 +537,7 @@ Symbol Table
     tr2                                                         =  0000CA L
     txd                                                         =  0000B1 L
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Intel 8051), page 10.
 Hexadecimal [24-Bits]
 
@@ -563,7 +565,7 @@ Area Table
   13 GSINIT5                                    size      0   flags   20
   14 GSINIT                                     size      0   flags   20
   15 GSFINAL                                    size      0   flags   20
-  16 CSEG                                       size    2E7   flags   20
+  16 CSEG                                       size    2F0   flags   20
   17 CONST                                      size      0   flags   20
   18 XINIT                                      size      0   flags   20
   19 CABS                                       size      0   flags   28

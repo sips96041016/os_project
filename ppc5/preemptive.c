@@ -45,12 +45,15 @@ void thread_manager(void){
         if(temp2==0) flag = 1;
         EA = 1;
         while(flag) {}
+        EA = 0;
         if(temp2){
             ID = temp2;
-	    temp2 = 0;
+            temp2 = 0;
             RESTORESTATE;
-	    return;
+            EA = 1;
+            return;
         }
+        EA = 1;
     }
 }
 
@@ -119,9 +122,9 @@ ThreadID ThreadCreate(FunctionPtr fp) {
     push a
     push a
     __endasm;
-    temp2 = i<<3;
+    temp3 = i<<3;
     __asm
-    push _temp2
+    push _temp3
     __endasm;
 
     ssp[i] = SP;

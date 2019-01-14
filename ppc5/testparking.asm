@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-; This file was generated Tue Jan 15 02:58:35 2019
+; This file was generated Tue Jan 15 03:45:40 2019
 ;--------------------------------------------------------
 	.module testparking
 	.optsdcc -mmcs51 --model-small
@@ -121,6 +121,7 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _temp3
 	.globl _print
 	.globl _c_temp3
 	.globl _c_temp2
@@ -296,6 +297,7 @@ _flag	=	0x004b
 _c_temp2	=	0x004a
 _c_temp3	=	0x005c
 _print	=	0x005b
+_temp3	=	0x006b
 ;--------------------------------------------------------
 ; absolute internal ram data
 ;--------------------------------------------------------
@@ -1631,13 +1633,13 @@ _Printer:
 ;	testparking.c:301: current = 1;
 	mov	r0,#_current
 	mov	@r0,#0x01
-;	testparking.c:302: while(c_temp<4){
+;	testparking.c:302: while(c_temp<10){
 00190$:
 	mov	r0,#_c_temp
 	clr	c
 	mov	a,@r0
 	xrl	a,#0x80
-	subb	a,#0x84
+	subb	a,#0x8a
 	jc	00382$
 	ret
 00382$:
@@ -1701,7 +1703,7 @@ _Printer:
 	jbc	_TI,00388$
 	sjmp	00127$
 00388$:
-;	testparking.c:316: SBUF = '0' + j/2;
+;	testparking.c:316: SBUF = '1' + j/2;
 	mov	r0,#_j
 	clr	F0
 	mov	b,#0x02
@@ -1716,7 +1718,7 @@ _Printer:
 	cpl	a
 	inc	a
 00390$:
-	add	a,#0x30
+	add	a,#0x31
 	mov	_SBUF,a
 ;	testparking.c:317: while (!TI) { }
 00130$:
@@ -1825,13 +1827,13 @@ _Printer:
 	jbc	_TI,00404$
 	sjmp	00166$
 00404$:
-;	testparking.c:356: SBUF = '0' + c_temp2/0x80;
+;	testparking.c:356: SBUF = '1' + c_temp2/0x80;
 	mov	r0,#_c_temp2
 	mov	a,@r0
 	rl	a
 	anl	a,#0x01
 	mov	r7,a
-	add	a,#0x30
+	add	a,#0x31
 	mov	_SBUF,a
 ;	testparking.c:357: while (!TI) { }
 00169$:
