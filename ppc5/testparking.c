@@ -140,7 +140,7 @@ void Car3(void) {
     }
     SemaphoreSignal(mutex,m_tail);
     SemaphoreSignal(print,p_tail);
-    delay(2);
+    delay(1);
     log[5] = now();
     SemaphoreWait(mutex,m_tail);
     if(!(plot[0]-3)) {
@@ -196,7 +196,7 @@ void Car4(void) {
     }
     SemaphoreSignal(mutex,m_tail);
     SemaphoreSignal(print,p_tail);
-    delay(2);
+    delay(3);
     log[7] = now();
     SemaphoreWait(mutex,m_tail);
     if(!(plot[0]-4)) {

@@ -1,7 +1,7 @@
                                       1 ;--------------------------------------------------------
                                       2 ; File Created by SDCC : free open source ANSI-C Compiler
                                       3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-                                      4 ; This file was generated Tue Jan 15 03:45:40 2019
+                                      4 ; This file was generated Tue Jan 15 03:52:37 2019
                                       5 ;--------------------------------------------------------
                                       6 	.module testparking
                                       7 	.optsdcc -mmcs51 --model-small
@@ -890,8 +890,8 @@
       0002D9 15 6C            [12]  890 	dec	_p_tail
       0002DB                        891 00109$:
       0002DB D2 AF            [12]  892 	setb	_EA
-                                    893 ;	testparking.c:143: delay(2);
-      0002DD 75 82 02         [24]  894 	mov	dpl,#0x02
+                                    893 ;	testparking.c:143: delay(1);
+      0002DD 75 82 01         [24]  894 	mov	dpl,#0x01
       0002E0 12 08 83         [24]  895 	lcall	_delay
                                     896 ;	testparking.c:144: log[5] = now();
       0002E3 12 08 7E         [24]  897 	lcall	_now
@@ -1097,8 +1097,8 @@
       0003FB 15 6C            [12] 1097 	dec	_p_tail
       0003FD                       1098 00109$:
       0003FD D2 AF            [12] 1099 	setb	_EA
-                                   1100 ;	testparking.c:199: delay(2);
-      0003FF 75 82 02         [24] 1101 	mov	dpl,#0x02
+                                   1100 ;	testparking.c:199: delay(3);
+      0003FF 75 82 03         [24] 1101 	mov	dpl,#0x03
       000402 12 08 83         [24] 1102 	lcall	_delay
                                    1103 ;	testparking.c:200: log[7] = now();
       000405 12 08 7E         [24] 1104 	lcall	_now
