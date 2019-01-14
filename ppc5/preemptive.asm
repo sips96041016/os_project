@@ -1,7 +1,7 @@
 ;--------------------------------------------------------
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
-; This file was generated Mon Jan 14 18:58:01 2019
+; This file was generated Tue Jan 15 02:58:35 2019
 ;--------------------------------------------------------
 	.module preemptive
 	.optsdcc -mmcs51 --model-small
@@ -109,6 +109,12 @@
 	.globl _DPL
 	.globl _SP
 	.globl _P0
+	.globl _print
+	.globl _c_temp3
+	.globl _c_temp2
+	.globl _flag
+	.globl _current
+	.globl _j
 	.globl _plot
 	.globl _thread
 	.globl _mutex
@@ -119,10 +125,11 @@
 	.globl _i
 	.globl _temp2
 	.globl _temp1
-	.globl _car_temp
+	.globl _c_temp
 	.globl _ID
 	.globl _bitmap
 	.globl _ssp
+	.globl _p_tail
 	.globl _th_tail
 	.globl _m_tail
 	.globl _now
@@ -247,6 +254,7 @@ _CY	=	0x00d7
 	.area DSEG    (DATA)
 _m_tail	=	0x003c
 _th_tail	=	0x003d
+_p_tail	=	0x006c
 ;--------------------------------------------------------
 ; overlayable items in internal ram 
 ;--------------------------------------------------------
@@ -257,7 +265,7 @@ _th_tail	=	0x003d
 _ssp	=	0x0020
 _bitmap	=	0x0024
 _ID	=	0x0028
-_car_temp	=	0x0029
+_c_temp	=	0x0029
 _temp1	=	0x002a
 _temp2	=	0x002b
 _i	=	0x002c
@@ -268,6 +276,12 @@ _log	=	0x0030
 _mutex	=	0x003a
 _thread	=	0x003b
 _plot	=	0x004e
+_j	=	0x004d
+_current	=	0x004c
+_flag	=	0x004b
+_c_temp2	=	0x004a
+_c_temp3	=	0x005c
+_print	=	0x005b
 ;--------------------------------------------------------
 ; absolute internal ram data
 ;--------------------------------------------------------
@@ -378,26 +392,25 @@ _delay:
 ;	 function thread_manager
 ;	-----------------------------------------
 _thread_manager:
-;	preemptive.c:38: temp1 = temp2 = 0;
+;	preemptive.c:38: while(1){
+00112$:
+;	preemptive.c:39: EA = 0;
+	clr	_EA
+;	preemptive.c:40: temp1 = temp2 = 0;
 	mov	r0,#_temp2
 	mov	@r0,#0x00
 	mov	r0,#_temp1
 	mov	@r0,#0x00
-;	preemptive.c:39: while(temp2==0){
-00104$:
-	mov	r0,#_temp2
-	mov	a,@r0
-	jnz	00106$
-;	preemptive.c:40: for(i=1;i<MAXTHREADS;i++) if( temp1<bitmap[i] ) {
+;	preemptive.c:41: for(i=1;i<MAXTHREADS;i++) if( temp1<bitmap[i] ) {
 	mov	r0,#_i
 	mov	@r0,#0x01
-00108$:
+00115$:
 	mov	r0,#_i
 	clr	c
 	mov	a,@r0
 	xrl	a,#0x80
 	subb	a,#0x84
-	jnc	00104$
+	jnc	00103$
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
@@ -410,8 +423,8 @@ _thread_manager:
 	mov	b,r7
 	xrl	b,#0x80
 	subb	a,b
-	jnc	00109$
-;	preemptive.c:41: temp1 = bitmap[i];
+	jnc	00116$
+;	preemptive.c:42: temp1 = bitmap[i];
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
@@ -419,23 +432,44 @@ _thread_manager:
 	mov	r0,#_temp1
 	mov	a,@r1
 	mov	@r0,a
-;	preemptive.c:42: temp2 = i;
+;	preemptive.c:43: temp2 = i;
 	mov	r0,#_i
 	mov	r1,#_temp2
 	mov	a,@r0
 	mov	@r1,a
-00109$:
-;	preemptive.c:40: for(i=1;i<MAXTHREADS;i++) if( temp1<bitmap[i] ) {
+00116$:
+;	preemptive.c:41: for(i=1;i<MAXTHREADS;i++) if( temp1<bitmap[i] ) {
 	mov	r0,#_i
 	inc	@r0
-	sjmp	00108$
+	sjmp	00115$
+00103$:
+;	preemptive.c:45: if(temp2==0) flag = 1;
+	mov	r0,#_temp2
+	mov	a,@r0
+	jnz	00105$
+	mov	r0,#_flag
+	mov	@r0,#0x01
+00105$:
+;	preemptive.c:46: EA = 1;
+	setb	_EA
+;	preemptive.c:47: while(flag) {}
 00106$:
-;	preemptive.c:45: ID = temp2;
+	mov	r0,#_flag
+	mov	a,@r0
+	jnz	00106$
+;	preemptive.c:48: if(temp2){
+	mov	r0,#_temp2
+	mov	a,@r0
+	jz	00112$
+;	preemptive.c:49: ID = temp2;
 	mov	r0,#_temp2
 	mov	r1,#_ID
 	mov	a,@r0
 	mov	@r1,a
-;	preemptive.c:46: RESTORESTATE;
+;	preemptive.c:50: temp2 = 0;
+	mov	r0,#_temp2
+	mov	@r0,#0x00
+;	preemptive.c:51: RESTORESTATE;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_ssp
@@ -446,18 +480,17 @@ _thread_manager:
 	pop DPL 
 	pop B 
 	pop ACC 
-;	preemptive.c:49: __endasm;
-	reti
+;	preemptive.c:52: return;
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'myTimer0Handler'
 ;------------------------------------------------------------
-;	preemptive.c:52: void myTimer0Handler(void){
+;	preemptive.c:57: void myTimer0Handler(void){
 ;	-----------------------------------------
 ;	 function myTimer0Handler
 ;	-----------------------------------------
 _myTimer0Handler:
-;	preemptive.c:53: SAVESTATE;
+;	preemptive.c:58: SAVESTATE;
 	push ACC 
 	push B 
 	push DPL 
@@ -470,7 +503,10 @@ _myTimer0Handler:
 	add	a,#_ssp
 	mov	r0,a
 	mov	@r0,_SP
-;	preemptive.c:54: counter = (counter==4) ? 0 : counter+1;
+;	preemptive.c:60: flag = 0;
+	mov	r0,#_flag
+	mov	@r0,#0x00
+;	preemptive.c:62: counter = (counter==4) ? 0 : counter+1;
 	mov	r0,#_counter
 	cjne	@r0,#0x04,00118$
 	mov	r7,#0x00
@@ -483,14 +519,14 @@ _myTimer0Handler:
 00119$:
 	mov	r0,#_counter
 	mov	@r0,ar7
-;	preemptive.c:55: if(!counter) time++;
+;	preemptive.c:63: if(!counter) time++;
 	mov	r0,#_counter
 	mov	a,@r0
 	jnz	00102$
 	mov	r0,#_time
 	inc	@r0
 00102$:
-;	preemptive.c:57: for(i=1;i<MAXTHREADS;i++){
+;	preemptive.c:65: for(i=1;i<MAXTHREADS;i++){
 	mov	r0,#_i
 	mov	@r0,#0x01
 00114$:
@@ -500,7 +536,7 @@ _myTimer0Handler:
 	xrl	a,#0x80
 	subb	a,#0x84
 	jnc	00112$
-;	preemptive.c:58: if( bitmap[i]>0 ){
+;	preemptive.c:66: if( bitmap[i]>0 ){
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
@@ -512,7 +548,7 @@ _myTimer0Handler:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	00110$
-;	preemptive.c:59: if( i==ID ) bitmap[i]=1;
+;	preemptive.c:67: if( i==ID ) bitmap[i]=1;
 	mov	r0,#_i
 	mov	r1,#_ID
 	mov	b,@r0
@@ -525,7 +561,7 @@ _myTimer0Handler:
 	mov	@r0,#0x01
 	sjmp	00115$
 00104$:
-;	preemptive.c:60: else bitmap[i]++;
+;	preemptive.c:68: else bitmap[i]++;
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
@@ -536,7 +572,7 @@ _myTimer0Handler:
 	mov	@r1,a
 	sjmp	00115$
 00110$:
-;	preemptive.c:62: else if( bitmap[i]==-2 && D[i]==time ) bitmap[i] = 9;
+;	preemptive.c:70: else if( bitmap[i]==-2 && D[i]==time ) bitmap[i] = 9;
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
@@ -557,15 +593,15 @@ _myTimer0Handler:
 	mov	r0,a
 	mov	@r0,#0x09
 00115$:
-;	preemptive.c:57: for(i=1;i<MAXTHREADS;i++){
+;	preemptive.c:65: for(i=1;i<MAXTHREADS;i++){
 	mov	r0,#_i
 	inc	@r0
 	sjmp	00114$
 00112$:
-;	preemptive.c:64: ID = 0;//manager_ID
+;	preemptive.c:72: ID = 0;//manager_ID
 	mov	r0,#_ID
 	mov	@r0,#0x00
-;	preemptive.c:65: RESTORESTATE;
+;	preemptive.c:73: RESTORESTATE;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_ssp
@@ -576,16 +612,18 @@ _myTimer0Handler:
 	pop DPL 
 	pop B 
 	pop ACC 
+;	preemptive.c:76: __endasm;
+	reti
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'Bootstrap'
 ;------------------------------------------------------------
-;	preemptive.c:68: void Bootstrap(void) {
+;	preemptive.c:79: void Bootstrap(void) {
 ;	-----------------------------------------
 ;	 function Bootstrap
 ;	-----------------------------------------
 _Bootstrap:
-;	preemptive.c:69: bitmap[0] = bitmap[1] = bitmap[2] = bitmap[3] = 0;
+;	preemptive.c:80: bitmap[0] = bitmap[1] = bitmap[2] = bitmap[3] = 0;
 	mov	r0,#(_bitmap + 0x0003)
 	mov	@r0,#0x00
 	mov	r0,#(_bitmap + 0x0002)
@@ -594,27 +632,33 @@ _Bootstrap:
 	mov	@r0,#0x00
 	mov	r0,#_bitmap
 	mov	@r0,#0x00
-;	preemptive.c:71: TMOD = 0;
+;	preemptive.c:81: time = 1;
+	mov	r0,#_time
+	mov	@r0,#0x01
+;	preemptive.c:82: counter = 0;
+	mov	r0,#_counter
+	mov	@r0,#0x00
+;	preemptive.c:84: TMOD = 0;
 	mov	_TMOD,#0x00
-;	preemptive.c:72: IE = 0x82;
+;	preemptive.c:85: IE = 0x82;
 	mov	_IE,#0x82
-;	preemptive.c:73: TR0 = 1;
+;	preemptive.c:86: TR0 = 1;
 	setb	_TR0
-;	preemptive.c:75: SemaphoreCreate(thread, 4);
+;	preemptive.c:88: SemaphoreCreate(thread, 4);
 	mov	r0,#_thread
 	mov	@r0,#0x04
-;	preemptive.c:78: __endasm;
+;	preemptive.c:91: __endasm;
 	mov _th_tail,#0x7C
-;	preemptive.c:80: ThreadCreate(thread_manager);
+;	preemptive.c:93: ThreadCreate(thread_manager);
 	mov	dptr,#_thread_manager
 	lcall	_ThreadCreate
-;	preemptive.c:81: ID = ThreadCreate(main);
+;	preemptive.c:94: ID = ThreadCreate(main);
 	mov	dptr,#_main
 	lcall	_ThreadCreate
 	mov	a,dpl
 	mov	r0,#_ID
 	mov	@r0,a
-;	preemptive.c:82: RESTORESTATE;
+;	preemptive.c:95: RESTORESTATE;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_ssp
@@ -631,12 +675,12 @@ _Bootstrap:
 ;------------------------------------------------------------
 ;fp                        Allocated to registers 
 ;------------------------------------------------------------
-;	preemptive.c:85: ThreadID ThreadCreate(FunctionPtr fp) {
+;	preemptive.c:98: ThreadID ThreadCreate(FunctionPtr fp) {
 ;	-----------------------------------------
 ;	 function ThreadCreate
 ;	-----------------------------------------
 _ThreadCreate:
-;	preemptive.c:86: SemaphoreWait(thread,th_tail);
+;	preemptive.c:99: SemaphoreWait(thread,th_tail);
 	clr	_EA
 	mov	r0,#_thread
 	dec	@r0
@@ -656,9 +700,9 @@ _ThreadCreate:
 	lcall	_ThreadYield
 00102$:
 	setb	_EA
-;	preemptive.c:87: EA = 0;
+;	preemptive.c:100: EA = 0;
 	clr	_EA
-;	preemptive.c:88: for(i=0;i<MAXTHREADS;i++) if(!bitmap[i]) break;
+;	preemptive.c:101: for(i=0;i<MAXTHREADS;i++) if(!bitmap[i]) break;
 	mov	r0,#_i
 	mov	@r0,#0x00
 00109$:
@@ -678,22 +722,22 @@ _ThreadCreate:
 	inc	@r0
 	sjmp	00109$
 00105$:
-;	preemptive.c:89: if(i==MAXTHREADS) return -1;
+;	preemptive.c:102: if(i==MAXTHREADS) return -1;
 	mov	r0,#_i
 	cjne	@r0,#0x04,00107$
 	mov	dpl,#0xFF
 	ret
 00107$:
-;	preemptive.c:91: bitmap[i] = 1;
+;	preemptive.c:104: bitmap[i] = 1;
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_bitmap
 	mov	r0,a
 	mov	@r0,#0x01
-;	preemptive.c:92: temp1 = SP;
+;	preemptive.c:105: temp1 = SP;
 	mov	r0,#_temp1
 	mov	@r0,_SP
-;	preemptive.c:93: SP = 0x3F + i*0x10;
+;	preemptive.c:106: SP = 0x3F + i*0x10;
 	mov	r0,#_i
 	mov	a,@r0
 	swap	a
@@ -701,7 +745,7 @@ _ThreadCreate:
 	mov	r7,a
 	add	a,#0x3F
 	mov	_SP,a
-;	preemptive.c:108: __endasm;
+;	preemptive.c:121: __endasm;
 	mov a,DPL
 	mov b,DPH
 	mov dptr,#_ThreadExit
@@ -714,7 +758,7 @@ _ThreadCreate:
 	push a
 	push a
 	push a
-;	preemptive.c:109: temp2 = i<<3;
+;	preemptive.c:122: temp2 = i<<3;
 	mov	r0,#_i
 	mov	r1,#_temp2
 	mov	a,@r0
@@ -722,34 +766,34 @@ _ThreadCreate:
 	rr	a
 	anl	a,#0xF8
 	mov	@r1,a
-;	preemptive.c:112: __endasm;
+;	preemptive.c:125: __endasm;
 	push _temp2
-;	preemptive.c:114: ssp[i] = SP;
+;	preemptive.c:127: ssp[i] = SP;
 	mov	r0,#_i
 	mov	a,@r0
 	add	a,#_ssp
 	mov	r0,a
 	mov	@r0,_SP
-;	preemptive.c:115: SP = temp1;
+;	preemptive.c:128: SP = temp1;
 	mov	r0,#_temp1
 	mov	_SP,@r0
-;	preemptive.c:116: EA = 1;
+;	preemptive.c:129: EA = 1;
 	setb	_EA
-;	preemptive.c:117: return i;
+;	preemptive.c:130: return i;
 	mov	r0,#_i
 	mov	dpl,@r0
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ThreadYield'
 ;------------------------------------------------------------
-;	preemptive.c:120: void ThreadYield(void) {
+;	preemptive.c:133: void ThreadYield(void) {
 ;	-----------------------------------------
 ;	 function ThreadYield
 ;	-----------------------------------------
 _ThreadYield:
-;	preemptive.c:121: EA = 0;
+;	preemptive.c:134: EA = 0;
 	clr	_EA
-;	preemptive.c:122: SAVESTATE;
+;	preemptive.c:135: SAVESTATE;
 	push ACC 
 	push B 
 	push DPL 
@@ -762,20 +806,20 @@ _ThreadYield:
 	add	a,#_ssp
 	mov	r0,a
 	mov	@r0,_SP
-;	preemptive.c:123: do {
+;	preemptive.c:136: do {
 00106$:
-;	preemptive.c:124: if(ID==MAXTHREADS-1) ID = 1;
+;	preemptive.c:137: if(ID==MAXTHREADS-1) ID = 0;
 	mov	r0,#_ID
 	cjne	@r0,#0x03,00102$
 	mov	r0,#_ID
-	mov	@r0,#0x01
+	mov	@r0,#0x00
 	sjmp	00103$
 00102$:
-;	preemptive.c:125: else ID++;
+;	preemptive.c:138: else ID++;
 	mov	r0,#_ID
 	inc	@r0
 00103$:
-;	preemptive.c:126: if(bitmap[ID]>0) break;
+;	preemptive.c:139: if(bitmap[ID]>0) break;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_bitmap
@@ -787,7 +831,7 @@ _ThreadYield:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	00106$
-;	preemptive.c:128: RESTORESTATE;
+;	preemptive.c:141: RESTORESTATE;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_ssp
@@ -798,18 +842,18 @@ _ThreadYield:
 	pop DPL 
 	pop B 
 	pop ACC 
-;	preemptive.c:129: EA = 1;
+;	preemptive.c:142: EA = 1;
 	setb	_EA
 	ret
 ;------------------------------------------------------------
 ;Allocation info for local variables in function 'ThreadExit'
 ;------------------------------------------------------------
-;	preemptive.c:132: void ThreadExit(void) {
+;	preemptive.c:145: void ThreadExit(void) {
 ;	-----------------------------------------
 ;	 function ThreadExit
 ;	-----------------------------------------
 _ThreadExit:
-;	preemptive.c:133: SemaphoreSignal(thread,th_tail);
+;	preemptive.c:146: SemaphoreSignal(thread,th_tail);
 	clr	_EA
 	mov	r0,#_thread
 	inc	@r0
@@ -829,28 +873,31 @@ _ThreadExit:
 	dec	_th_tail
 00102$:
 	setb	_EA
-;	preemptive.c:134: EA = 0;
+;	preemptive.c:147: EA = 0;
 	clr	_EA
-;	preemptive.c:135: bitmap[ID] = 0;
+;	preemptive.c:148: bitmap[ID] = 0;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_bitmap
 	mov	r0,a
 	mov	@r0,#0x00
-;	preemptive.c:136: do {
+;	preemptive.c:152: __endasm;
+	clr RS1
+	clr RS0
+;	preemptive.c:153: do {
 00108$:
-;	preemptive.c:137: if(ID==MAXTHREADS-1) ID = 1;
+;	preemptive.c:154: if(ID==MAXTHREADS-1) ID = 0;
 	mov	r0,#_ID
 	cjne	@r0,#0x03,00104$
 	mov	r0,#_ID
-	mov	@r0,#0x01
+	mov	@r0,#0x00
 	sjmp	00105$
 00104$:
-;	preemptive.c:138: else ID++;
+;	preemptive.c:155: else ID++;
 	mov	r0,#_ID
 	inc	@r0
 00105$:
-;	preemptive.c:139: if(bitmap[ID]>0) break;
+;	preemptive.c:156: if(bitmap[ID]>0) break;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_bitmap
@@ -862,7 +909,7 @@ _ThreadExit:
 	xrl	b,#0x80
 	subb	a,b
 	jnc	00108$
-;	preemptive.c:141: RESTORESTATE;
+;	preemptive.c:158: RESTORESTATE;
 	mov	r0,#_ID
 	mov	a,@r0
 	add	a,#_ssp
@@ -873,7 +920,7 @@ _ThreadExit:
 	pop DPL 
 	pop B 
 	pop ACC 
-;	preemptive.c:142: EA = 1;
+;	preemptive.c:159: EA = 1;
 	setb	_EA
 	ret
 	.area CSEG    (CODE)

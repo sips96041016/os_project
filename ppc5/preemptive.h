@@ -7,7 +7,7 @@
 __idata __at (0x20) char ssp[MAXTHREADS];
 __idata __at (0x24) char bitmap[MAXTHREADS];
 __idata __at (0x28) char ID;
-__idata __at (0x29) char car_temp;
+__idata __at (0x29) char c_temp;
 __idata __at (0x2A) char temp1;
 __idata __at (0x2B) char temp2;
 __idata __at (0x2C) char i;
@@ -21,6 +21,13 @@ __idata __at (0x3B) char thread;
 __idata __at (0x3C) char* m_tail;
 __idata __at (0x3D) char* th_tail;
 __idata __at (0x4E) char plot[2];
+__idata __at (0x4D) char j;
+__idata __at (0x4C) unsigned char current;
+__idata __at (0x4B) char flag;
+__idata __at (0x4A) unsigned char c_temp2;
+__idata __at (0x5C) unsigned char c_temp3;
+__idata __at (0x5B) char print;
+__idata __at (0x6C) char* p_tail;
 
 #define SemaphoreCreate(s, n) s=n;
 #define SemaphoreWait(s,s_tail)\

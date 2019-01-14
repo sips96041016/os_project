@@ -80,9 +80,9 @@ C:   00000020  s__CODE
 C:   00000080  l_DSEG                          
 C:   000000F8  l_SSEG                          
 C:   00000100  l_IRAM                          
-C:   000004BB  l_CSEG                          
-C:   000004CF  s_CONST                         
-C:   000004CF  s_XINIT                         
+C:   00000B51  l_CSEG                          
+C:   00000B65  s_CONST                         
+C:   00000B65  s_XINIT                         
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
@@ -97,7 +97,7 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000020  _ssp                               preemptive
      00000024  _bitmap                            preemptive
      00000028  _ID                                preemptive
-     00000029  _car_temp                          preemptive
+     00000029  _c_temp                            preemptive
      0000002A  _temp1                             preemptive
      0000002B  _temp2                             preemptive
      0000002C  _D                                 preemptive
@@ -109,7 +109,14 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000003D  _th_tail                           preemptive
      0000003E  _counter                           preemptive
      0000003F  _time                              preemptive
+     0000004A  _c_temp2                           preemptive
+     0000004B  _flag                              preemptive
+     0000004C  _current                           preemptive
+     0000004D  _j                                 preemptive
      0000004E  _plot                              preemptive
+     0000005B  _print                             preemptive
+     0000005C  _c_temp3                           preemptive
+     0000006C  _p_tail                            preemptive
      00000080  _P0                                preemptive
      00000080  _P0_0                              preemptive
      00000081  _P0_1                              preemptive
@@ -136,13 +143,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      0000008D  _TF0                               preemptive
      0000008D  _TH1                               preemptive
      0000008E  _TR1                               preemptive
-     0000008F  _TF1                               preemptive
-     00000090  _P1                                preemptive
-     00000090  _P1_0                              preemptive
-     00000091  _P1_1                              preemptive
-     00000092  _P1_2                              preemptive
-     00000093  _P1_3                              preemptive
-     00000094  _P1_4                              preemptive
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -152,6 +152,13 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     0000008F  _TF1                               preemptive
+     00000090  _P1                                preemptive
+     00000090  _P1_0                              preemptive
+     00000091  _P1_1                              preemptive
+     00000092  _P1_2                              preemptive
+     00000093  _P1_3                              preemptive
+     00000094  _P1_4                              preemptive
      00000095  _P1_5                              preemptive
      00000096  _P1_6                              preemptive
      00000097  _P1_7                              preemptive
@@ -196,13 +203,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000B5  _T1                                preemptive
      000000B6  _P3_6                              preemptive
      000000B6  _WR                                preemptive
-     000000B7  _P3_7                              preemptive
-     000000B7  _RD                                preemptive
-     000000B8  _IP                                preemptive
-     000000B8  _PX0                               preemptive
-     000000B9  _PT0                               preemptive
-     000000BA  _PX1                               preemptive
-     000000BB  _PT1                               preemptive
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 Hexadecimal  [32-Bits]
 
@@ -212,6 +212,13 @@ Area                                    Addr        Size        Decimal Bytes (A
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
+     000000B7  _P3_7                              preemptive
+     000000B7  _RD                                preemptive
+     000000B8  _IP                                preemptive
+     000000B8  _PX0                               preemptive
+     000000B9  _PT0                               preemptive
+     000000BA  _PX1                               preemptive
+     000000BB  _PT1                               preemptive
      000000BC  _PS                                preemptive
      000000D0  _P                                 preemptive
      000000D0  _PSW                               preemptive
@@ -224,7 +231,6 @@ Area                                    Addr        Size        Decimal Bytes (A
      000000D7  _CY                                preemptive
      000000E0  _ACC                               preemptive
      000000F0  _B                                 preemptive
-
 ASxxxx Linker V03.00 + NoICE + sdld,  page 6.
 Hexadecimal  [32-Bits]
 
@@ -279,27 +285,30 @@ Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-CSEG                                00000014    000004BB =        1211. bytes (REL,CON,CODE)
+CSEG                                00000014    00000B51 =        2897. bytes (REL,CON,CODE)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
 C:   00000014  _Car1                              testparking
-C:   000000F3  _Car2                              testparking
-C:   000001D2  _Printer                           testparking
-C:   000001DE  _main                              testparking
-C:   00000203  __sdcc_gsinit_startup              testparking
-C:   00000207  __mcs51_genRAMCLEAR                testparking
-C:   00000208  __mcs51_genXINIT                   testparking
-C:   00000209  __mcs51_genXRAMCLEAR               testparking
-C:   0000020A  _timer0_ISR                        testparking
-C:   0000020E  _now                               preemptive
-C:   00000213  _delay                             preemptive
-C:   00000235  _thread_manager                    preemptive
-C:   00000296  _myTimer0Handler                   preemptive
-C:   00000345  _Bootstrap                         preemptive
-C:   00000388  _ThreadCreate                      preemptive
-C:   0000041F  _ThreadYield                       preemptive
-C:   0000046E  _ThreadExit                        preemptive
+C:   00000134  _Car2                              testparking
+C:   00000256  _Car3                              testparking
+C:   00000378  _Car4                              testparking
+C:   0000049A  _Car5                              testparking
+C:   000005BC  _Printer                           testparking
+C:   00000839  _main                              testparking
+C:   00000873  __sdcc_gsinit_startup              testparking
+C:   00000877  __mcs51_genRAMCLEAR                testparking
+C:   00000878  __mcs51_genXINIT                   testparking
+C:   00000879  __mcs51_genXRAMCLEAR               testparking
+C:   0000087A  _timer0_ISR                        testparking
+C:   0000087E  _now                               preemptive
+C:   00000883  _delay                             preemptive
+C:   000008A5  _thread_manager                    preemptive
+C:   0000091B  _myTimer0Handler                   preemptive
+C:   000009CF  _Bootstrap                         preemptive
+C:   00000A1A  _ThreadCreate                      preemptive
+C:   00000AB1  _ThreadYield                       preemptive
+C:   00000B00  _ThreadExit                        preemptive
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 12.
 

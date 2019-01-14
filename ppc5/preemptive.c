@@ -35,22 +35,30 @@ void delay(unsigned char n) {
 }
 
 void thread_manager(void){
-    temp1 = temp2 = 0;
-    while(temp2==0){
+    while(1){
+        EA = 0;
+        temp1 = temp2 = 0;
         for(i=1;i<MAXTHREADS;i++) if( temp1<bitmap[i] ) {
             temp1 = bitmap[i];
             temp2 = i;
         }
+        if(temp2==0) flag = 1;
+        EA = 1;
+        while(flag) {}
+        if(temp2){
+            ID = temp2;
+	    temp2 = 0;
+            RESTORESTATE;
+	    return;
+        }
     }
-    ID = temp2;
-    RESTORESTATE;
-    __asm
-    reti
-    __endasm;
 }
 
 void myTimer0Handler(void){
     SAVESTATE;
+
+    flag = 0;
+
     counter = (counter==4) ? 0 : counter+1;
     if(!counter) time++;
 
@@ -63,10 +71,15 @@ void myTimer0Handler(void){
     }
     ID = 0;//manager_ID
     RESTORESTATE;
+    __asm
+    reti
+    __endasm;
 }
 
 void Bootstrap(void) {
     bitmap[0] = bitmap[1] = bitmap[2] = bitmap[3] = 0;
+    time = 1;
+    counter = 0;
 
     TMOD = 0;
     IE = 0x82;
@@ -121,7 +134,7 @@ void ThreadYield(void) {
     EA = 0;
     SAVESTATE;
     do {
-        if(ID==MAXTHREADS-1) ID = 1;
+        if(ID==MAXTHREADS-1) ID = 0;
         else ID++;
         if(bitmap[ID]>0) break;
     } while (1);
@@ -133,8 +146,12 @@ void ThreadExit(void) {
     SemaphoreSignal(thread,th_tail);
     EA = 0;
     bitmap[ID] = 0;
+    __asm
+        clr RS1
+        clr RS0
+    __endasm;
     do {
-        if(ID==MAXTHREADS-1) ID = 1;
+        if(ID==MAXTHREADS-1) ID = 0;
         else ID++;
         if(bitmap[ID]>0) break;
     } while (1);
